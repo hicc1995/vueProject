@@ -5,7 +5,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import App from './App'
 import router from './router'
-import 'cc.css'
+import './cc.css'
 
 Vue.use(ElementUI)
 Vue.use(router)

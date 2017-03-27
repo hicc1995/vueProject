@@ -17,7 +17,7 @@
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">点击登录</el-button>
-      <el-button>取消</el-button>
+      <el-button @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
 </el-card>
@@ -36,15 +36,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(!this.form.resource&&!this.form.pw&&!this.form.resource)
-      if(!this.form.name&&!this.form.pw&&!this.form.resource){
-        this.$message({
-          message: '警告哦，所有输入都不能为空',
-          type: 'warning',
-          duration: 1000,
-          showClose: true
-        });
-      }else{
+      if(this.form.name&&this.form.pw&&this.form.resource){
         var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,30}');
         if(!regex.test(this.form.pw)){
           this.$message({
@@ -53,9 +45,24 @@ export default {
             duration: 3000,
             showClose: true
           });
+        }else{
+          console.log(this.form);
+          
         }
+      }else{
+        this.$message({
+          message: '警告哦，所有输入都不能为空',
+          type: 'warning',
+          duration: 1000,
+          showClose: true
+        });
       }
-      console.log('submit!');
+      
+    },
+    cancel() {
+      this.form.name = '';
+      this.form.pw = '';
+      this.form.resource = '';
     }
   }
 }

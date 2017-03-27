@@ -47,8 +47,5 @@ module.exports = {
 }
 </script>
 
-<style>
-.box-card{
-  margin: 0 20px;
-}
+<style scoped>
 </style>
