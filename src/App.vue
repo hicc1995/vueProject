@@ -14,6 +14,6 @@ export default {
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  min-width: 1300px;
+  /*min-width: 1300px;*/
 }
 </style>

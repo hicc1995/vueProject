@@ -3,7 +3,7 @@
 <el-card class="box-card">
 <h5>登录
 </h5>
-  <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+  <el-form ref="form" :model="form" :rules="rules" label-width="50px">
     <el-form-item label="姓名" prop="name">
       <el-input v-model.trim="form.name" prop="name"></el-input>
     </el-form-item>
