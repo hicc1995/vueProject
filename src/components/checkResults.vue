@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-card class="box-card">
+    <h5>查询成绩</h5>
       <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
         <el-form-item label="密码" prop="pass">
           <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>

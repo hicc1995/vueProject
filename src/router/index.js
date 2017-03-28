@@ -6,6 +6,8 @@ import foo from '@/components/view/foo'
 import bar from '@/components/view/bar'
 import std from '@/components/view/std'
 import allCourse from '@/components/view/allCourse'
+import myCourse from '@/components/view/myCourse'
+import personal from '@/components/view/personal'
 
 Vue.use(Router)
 
@@ -42,13 +44,17 @@ export default new Router({
           path: 'allCourse',
           component: allCourse,
         },
-        // {
-        //   path: 'myCourse',
-        //   components: myCourse
-        // },
+        {
+          path: 'myCourse',
+          component: myCourse
+        },
+        {
+          path: 'personal',
+          component: personal
+        },
         // {
         //   path: 'classSchedule',
-        //   components: classSchedule
+        //   component: classSchedule
         // }
       ]
     }
