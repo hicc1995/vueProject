@@ -8,6 +8,8 @@ import std from '@/components/view/std'
 import allCourse from '@/components/view/allCourse'
 import myCourse from '@/components/view/myCourse'
 import personal from '@/components/view/personal'
+import teach from '@/components/view/teach'
+import coursePlan from '@/components/view/coursePlan'
 
 Vue.use(Router)
 
@@ -56,6 +58,15 @@ export default new Router({
         //   path: 'classSchedule',
         //   component: classSchedule
         // }
+      ]
+    },
+    {
+      path: '/teach', components: {content:teach},
+      children: [
+        {
+          path: 'coursePlan',
+          component: coursePlan,
+        },
       ]
     }
   ]

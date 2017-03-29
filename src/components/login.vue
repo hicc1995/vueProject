@@ -8,7 +8,7 @@
       <el-input v-model.trim="form.name" prop="name"></el-input>
     </el-form-item>
     <el-form-item label="密码" prop="pw">
-      <el-input v-model.trim="form.pw"></el-input>
+      <el-input v-model.trim="form.pw" type="password"></el-input>
     </el-form-item>
     <el-form-item label="身份" prop="resource">
       <el-radio-group v-model.trim="form.resource">

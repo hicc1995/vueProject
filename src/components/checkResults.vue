@@ -2,15 +2,15 @@
   <div>
     <el-card class="box-card">
     <h5>查询成绩</h5>
-      <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+      <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="80px" class="demo-ruleForm">
+        <el-form-item label="姓名" prop="name">
+          <el-input  v-model="ruleForm2.name" auto-complete="off"></el-input>
+        </el-form-item>
         <el-form-item label="密码" prop="pass">
           <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
           <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="年龄" prop="age">
-          <el-input v-model.number="ruleForm2.age"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
@@ -25,21 +25,10 @@
 
 export default {
     data() {
-      var checkAge = (rule, value, callback) => {
+      var checkName = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('年龄不能为空'));
+          return callback(new Error('姓名不能为空'));
         }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
       };
       var validatePass = (rule, value, callback) => {
         if (value === '') {
@@ -64,7 +53,7 @@ export default {
         ruleForm2: {
           pass: '',
           checkPass: '',
-          age: ''
+          name: ''
         },
         rules2: {
           pass: [
@@ -73,8 +62,8 @@ export default {
           checkPass: [
             { validator: validatePass2, trigger: 'blur' }
           ],
-          age: [
-            { validator: checkAge, trigger: 'blur' }
+          name: [
+            { validator: checkName, trigger: 'blur' }
           ]
         }
       };

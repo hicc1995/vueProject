@@ -2,7 +2,23 @@
 	<div>
 		<el-row>
 			<el-col :span="11" :offset="1">
-				<el-card class="box-card"></el-card>
+				<el-card class="box-card">
+					<div slot="header" class="clearfix">
+					  <span style="line-height: 36px;">订阅信息</span>
+					</div>
+					<p>订阅成绩</p>
+					<el-switch
+						v-model="value1"
+						on-color="#13ce66"
+						off-color="#ff4949">
+					</el-switch>
+					<p>订阅通知</p>
+					<el-switch
+					  v-model="value2"
+					  on-color="#13ce66"
+					  off-color="#ff4949">
+					</el-switch>
+				</el-card>
 			</el-col>
 			<el-col :span="11">
 				<el-card class="box-card">
@@ -30,49 +46,54 @@
 <script>
 	export default{
 	data() {
-		var validateName = (rule, value, callback) => {
-		  if (value === '') {
-		    callback(new Error('请输入姓名'));
-		  } 
-		}
-		var validatePass = (rule, value, callback) => {
-		  if (value === '') {
-		    callback(new Error('请输入密码'));
-		  } else {
-		    if (this.form.pw2 !== '') {
-		      this.$refs.form.validateField('pw2');
-		    }
-		    callback();
-		  }
-		};
-		var validatePass2 = (rule, value, callback) => {
-		  if (value === '') {
-		    callback(new Error('请再次输入密码'));
-		  } else if (value === this.form.pw) {
-		    callback(new Error('两次输入密码一致!'));
-		  } else {
-		    callback();
-		  }
-		};
-		return{
-			form: {
-			  name: '',
-			  pw: '',
-			  pw2: '',
-			},
-			rules: {
-			  pw: [
-			    {validator: validatePass, trigger: 'blur'}
-			  ],
-			  name: [
-			    {validator: validateName, trigger: 'blur'}
-			  ],
-			  pw2: [
-			    {validator: validatePass2, trigger: 'blur'}
-			  ]
+			var validateName = (rule, value, callback) => {
+				if (value === '') {
+					callback(new Error('请输入姓名'));
+				}
 			}
-		}
-	},
+			var validatePass = (rule, value, callback) => {
+				if (value === '') {
+					callback(new Error('请输入密码'));
+				} else {
+					if (this.form.pw2 !== '') {
+						this.$refs.form.validateField('pw2');
+					}
+					callback();
+				}
+			};
+			var validatePass2 = (rule, value, callback) => {
+				if (value === '') {
+					callback(new Error('请再次输入密码'));
+				} else if (value === this.form.pw) {
+					callback(new Error('两次输入密码一致!'));
+				} else {
+					callback();
+				}
+			};
+			return {
+				value1: false,
+				value2: false,
+				form: {
+					name: '',
+					pw: '',
+					pw2: '',
+				},
+				rules: {
+					pw: [{
+						validator: validatePass,
+						trigger: 'blur'
+					}],
+					name: [{
+						validator: validateName,
+						trigger: 'blur'
+					}],
+					pw2: [{
+						validator: validatePass2,
+						trigger: 'blur'
+					}]
+				}
+			}
+		},
 		methods: {
 			submitForm(form) {
 				this.$refs[form].validate((valid) => {
@@ -86,6 +107,14 @@
 			},
 			resetForm(form) {
 				this.$refs[form].resetFields();
+			}
+		},
+		watch: {
+			value1: function(newValue, old){
+				console.log(newValue,old)
+			},
+			value2: function(newValue, old){
+				console.log(newValue, old)
 			}
 		}
 	}
