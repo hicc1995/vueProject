@@ -7,7 +7,7 @@
 			<el-col :span="11">
 				<el-card class="box-card">
 				<h5>修改密码</h5>
-					<el-form ref="form" :model="form" :rules="rules">
+					<el-form ref="form" :model="form" :rules="rules" label-width="80px">
 						<el-form-item label="姓名" prop="name">
 						  <el-input v-model.trim="form.name" prop="name"></el-input>
 						</el-form-item>
@@ -30,6 +30,11 @@
 <script>
 	export default{
 	data() {
+		var validateName = (rule, value, callback) => {
+		  if (value === '') {
+		    callback(new Error('请输入姓名'));
+		  } 
+		}
 		var validatePass = (rule, value, callback) => {
 		  if (value === '') {
 		    callback(new Error('请输入密码'));
