@@ -24,8 +24,8 @@
 				<el-card class="box-card">
 				<h5>修改密码</h5>
 					<el-form ref="form" :model="form" :rules="rules" label-width="80px">
-						<el-form-item label="姓名" prop="name">
-						  <el-input v-model.trim="form.name" prop="name"></el-input>
+						<el-form-item label="学号" prop="number">
+						  <el-input v-model.trim="form.number" prop="number"></el-input>
 						</el-form-item>
 						<el-form-item label="原始密码" prop="pw">
 						  <el-input v-model.trim="form.pw"></el-input>
@@ -46,9 +46,9 @@
 <script>
 	export default{
 	data() {
-			var validateName = (rule, value, callback) => {
+			var validateNumber = (rule, value, callback) => {
 				if (value === '') {
-					callback(new Error('请输入姓名'));
+					callback(new Error('请输入学号'));
 				}
 			}
 			var validatePass = (rule, value, callback) => {
@@ -74,7 +74,7 @@
 				value1: false,
 				value2: false,
 				form: {
-					name: '',
+					number: '',
 					pw: '',
 					pw2: '',
 				},
@@ -83,8 +83,8 @@
 						validator: validatePass,
 						trigger: 'blur'
 					}],
-					name: [{
-						validator: validateName,
+					number: [{
+						validator: validateNumber,
 						trigger: 'blur'
 					}],
 					pw2: [{

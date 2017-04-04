@@ -4,8 +4,8 @@
 <h5>登录
 </h5>
   <el-form ref="form" :model="form" :rules="rules" label-width="50px">
-    <el-form-item label="姓名" prop="name">
-      <el-input v-model.trim="form.name" prop="name"></el-input>
+    <el-form-item label="账号" prop="number">
+      <el-input v-model.trim="form.number" prop="number"></el-input>
     </el-form-item>
     <el-form-item label="密码" prop="pw">
       <el-input v-model.trim="form.pw" type="password"></el-input>
@@ -38,7 +38,7 @@ export default {
         }
       }
     };
-    var validateName = (rule, value, callback) =>{
+    var validateNumber = (rule, value, callback) =>{
       if(!value){
         callback(new Error('姓名不能为空'))
       }
@@ -50,7 +50,7 @@ export default {
     }
     return {
       form: {
-        name: '',
+        number: '',
         resource: '',
         pw: '',
       },
@@ -58,8 +58,8 @@ export default {
         pw: [
           {validator: validatePass, trigger: 'blur'}
         ],
-        name: [
-          {validator: validateName, trigger: 'blur'}
+        number: [
+          {validator: validateNumber, trigger: 'blur'}
         ],
         resource: [
           {validator: validateRes, trigger: 'blur'}
@@ -79,7 +79,7 @@ export default {
       })
     },
     cancel() {
-      this.form.name = '';
+      this.form.number = '';
       this.form.pw = '';
       this.form.resource = '';
     }

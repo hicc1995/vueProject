@@ -3,14 +3,23 @@
     <el-card class="box-card">
     <h5>查询成绩</h5>
       <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="80px" class="demo-ruleForm">
-        <el-form-item label="姓名" prop="name">
-          <el-input  v-model="ruleForm2.name" auto-complete="off"></el-input>
+        <el-form-item label="学号" prop="number">
+          <el-input  v-model="ruleForm2.number" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="pass">
-          <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
+        <el-form-item label="密码" prop="password">
+          <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="密码为身份证后六位"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
+        <el-form-item label="学年" prop="year">
+          <el-select v-model="ruleForm2.year" auto-complete="off" placeholder="请选择">
+            <el-option :label="'2015-2016'" :value="'2015-2016'"></el-option>
+            <el-option :label="'2016-2017'" :value="'2016-2017'"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="学期" prop="semester">
+          <el-select v-model="ruleForm2.semester" auto-complete="off" placeholder="请选择">
+            <el-option :label="1" :value="1"></el-option>
+            <el-option :label="2" :value="2"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
@@ -27,44 +36,44 @@ export default {
     data() {
       var checkName = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('姓名不能为空'));
+          return callback(new Error('学号不能为空'));
         }
       };
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
-        } else {
-          if (this.ruleForm2.checkPass !== '') {
-            this.$refs.ruleForm2.validateField('checkPass');
-          }
-          callback();
         }
       };
-      var validatePass2 = (rule, value, callback) => {
+      var validateYear = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm2.pass) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
+          callback(new Error('请输入学年'));
+        }
+      };
+      var validateSemester = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入学期'));
         }
       };
       return {
         ruleForm2: {
-          pass: '',
-          checkPass: '',
-          name: ''
+          password: '',
+          year: '',
+          number: '',
+          semester: ''
         },
         rules2: {
-          pass: [
+          password: [
             { validator: validatePass, trigger: 'blur' }
           ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
+          year: [
+            { validator: validateYear, trigger: 'blur' }
           ],
-          name: [
+          number: [
             { validator: checkName, trigger: 'blur' }
-          ]
+          ],
+          semester: [
+            { validator: validateSemester, trigger: 'blur' }
+          ],
         }
       };
     },
@@ -73,6 +82,7 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');
+            //www.ccqgq.top/query/api/login
           } else {
             console.log('error submit!!');
             return false;
