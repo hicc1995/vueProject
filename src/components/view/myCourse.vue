@@ -25,9 +25,12 @@
 
 <script>
   export default {
-    data() {
-      return {
-        tableData: [{
+    created() {
+      this.acquireData();
+    },
+    methods: {
+      acquireData() {
+        let data = [{
           date: '2016-05-02',
           className: '地理',
           address: '上海市普陀区金沙江路 1518 弄',
@@ -47,7 +50,13 @@
           className: '体育',
           address: '上海市普陀区金沙江路 1516 弄',
           teacher: 'cc'
-        }]
+        }];
+        this.tableData = data;
+      }
+    },
+    data() {
+      return {
+        tableData : []
       }
     }
   }

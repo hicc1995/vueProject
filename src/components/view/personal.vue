@@ -28,10 +28,10 @@
 						  <el-input v-model.trim="form.number" prop="number"></el-input>
 						</el-form-item>
 						<el-form-item label="原始密码" prop="pw">
-						  <el-input v-model.trim="form.pw"></el-input>
+						  <el-input v-model.trim="form.pw" type="password"></el-input>
 						</el-form-item>
 						<el-form-item label="新密码" prop="pw2">
-						  <el-input v-model.trim="form.pw2"></el-input>
+						  <el-input v-model.trim="form.pw2" type="password"></el-input>
 						</el-form-item>
 						<el-form-item>
 						  <el-button type="primary" @click="submitForm('form')">提交</el-button>
@@ -50,6 +50,7 @@
 				if (value === '') {
 					callback(new Error('请输入学号'));
 				}
+				callback();
 			}
 			var validatePass = (rule, value, callback) => {
 				if (value === '') {
@@ -107,14 +108,38 @@
 			},
 			resetForm(form) {
 				this.$refs[form].resetFields();
+			},
+			submitEmail(newValue) {
+				if(newValue == true){
+					this.$prompt('请输入邮箱', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						inputPattern: /[\w!#$%&*+/=?^_`{|}~-]+(?:\.[\w!#$%&*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+						inputErrorMessage: '邮箱格式不正确'
+					}).then(({
+						value
+					}) => {
+						this.$message({
+							type: 'success',
+							message: '你的邮箱是: ' + value
+						});
+					}).catch(() => {
+						this.$message({
+							type: 'info',
+							message: '取消输入'
+						});
+					});
+				}
 			}
 		},
 		watch: {
 			value1: function(newValue, old){
-				console.log(newValue,old)
+				console.log(newValue,old);
+				this.submitEmail(newValue);
 			},
 			value2: function(newValue, old){
-				console.log(newValue, old)
+				console.log(newValue, old);
+				this.submitEmail(newValue);
 			}
 		}
 	}

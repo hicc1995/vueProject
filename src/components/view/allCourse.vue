@@ -1,9 +1,8 @@
 <template>
   <el-table
-    :data="tableData4"
+    :data="tableDate"
     border
-    style="width: 100%"
-    :row-class-name="tableRowClassName">
+    style="width: 100%">
     <el-table-column
       prop="date"
       label="日期">
@@ -35,7 +34,7 @@
       label="操作">
       <template scope="scope">
         <el-button
-          @click.native.prevent="selectRow(scope.$index, tableData4)"
+          @click.native.prevent="selectRow(scope.$index, tableDate)"
           type="text"
           size="small">
           选择课程
@@ -55,26 +54,23 @@
 </style>
 <script>
   export default {
-    methods: {
-      selectRow(index, rows) {
-        // rows.splice(index, 1);
-        console.log(index, rows);
-      },
-      tableRowClassName(row, index) {
-        if (index === 1) {
-          return 'info-row';
-        } else if (index === 3) {
-          return 'positive-row';
-        }
-          return '';
-      },
-      filterTag(value, row) {
-        return row.tag === value;
-      }
+    created() {
+      this.acquireDate();
     },
-    data() {
-      return {
-        tableData4: [{
+    methods: {
+      acquireDate() {
+        this.axios({
+          url: '',
+          method: 'get',
+          baseURL: '',
+        })
+        .then(res => {
+          // let data = res.data;
+        })
+        .catch(res => {
+
+        })
+        let data = [{
           date: '2016-05-03',
           name: '王小虎',
           province: '上海',
@@ -117,6 +113,31 @@
           address: '上海市普陀区金沙江路 00 弄',
           tag: '未选'
         }]
+        this.tableDate = data;
+      },
+      selectRow(index, rows) {
+        // rows.splice(index, 1);
+        if(rows[index].tag !== '已选'){
+          rows[index].tag = '已选';
+          console.log(rows[index].tag);
+          axios({
+
+          })
+        }else{
+          this.$message({
+            showClose: true,
+            message: '不能重复选择课程',
+            type: 'warning'
+          });
+        }
+      },
+      filterTag(value, row) {
+        return row.tag === value;
+      }
+    },
+    data() {
+      return {
+        tableDate : []
       }
     }
   }

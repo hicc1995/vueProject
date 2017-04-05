@@ -10,7 +10,7 @@ import myCourse from '@/components/view/myCourse'
 import personal from '@/components/view/personal'
 import teach from '@/components/view/teach'
 import coursePlan from '@/components/view/coursePlan'
-
+import publishInfo from '@/components/view/publishInfo'
 Vue.use(Router)
 
 export default new Router({
@@ -67,6 +67,10 @@ export default new Router({
           path: 'coursePlan',
           component: coursePlan,
         },
+        {
+          path: 'publishInfo',
+          component: publishInfo,
+        }
       ]
     }
   ]

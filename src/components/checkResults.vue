@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
     <h5>查询成绩</h5>
-      <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="80px" class="demo-ruleForm">
+      <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="50px" class="demo-ruleForm">
         <el-form-item label="学号" prop="number">
           <el-input  v-model="ruleForm2.number" auto-complete="off"></el-input>
         </el-form-item>
@@ -38,21 +38,25 @@ export default {
         if (!value) {
           return callback(new Error('学号不能为空'));
         }
+        callback();
       };
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
         }
+        callback();
       };
       var validateYear = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入学年'));
         }
+        callback();
       };
       var validateSemester = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入学期'));
         }
+        callback();
       };
       return {
         ruleForm2: {
@@ -83,6 +87,26 @@ export default {
           if (valid) {
             alert('submit!');
             //www.ccqgq.top/query/api/login
+            this.axios({
+              url: '/login',
+              method: 'post',
+              baseURL: 'http://www.ccqgq.top/query/api/',
+              data: {}
+            })
+            .then(res => {
+              console.log(res.data);
+              console.log(res.status);
+              console.log(res.statusText);
+              console.log(res.headers);
+              console.log(res.config);
+            })
+            .catch(res => {
+              console.log(res.data);
+              console.log(res.status);
+              console.log(res.statusText);
+              console.log(res.headers);
+              console.log(res.config);
+            }) 
           } else {
             console.log('error submit!!');
             return false;
