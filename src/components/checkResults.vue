@@ -89,9 +89,9 @@ export default {
             //www.ccqgq.top/query/api/login
             this.axios({
               url: '/login',
+              baseURL: '/query/api',
               method: 'post',
-              baseURL: 'http://www.ccqgq.top/query/api/',
-              data: {}
+              data: this.ruleForm2
             })
             .then(res => {
               console.log(res.data);
