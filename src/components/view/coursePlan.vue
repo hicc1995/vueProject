@@ -1,5 +1,6 @@
 <template>
   <el-row>
+  <div class="title"><p>课程计划</p></div>
     <el-col :span="16">
       <el-table
         :data="tableData"
@@ -21,7 +22,24 @@
       </el-table>
     </el-col>
     <el-col :span="7" :offset="1">
-      
+    <el-card class="box-card">
+      <h5>新增课程计划</h5>
+      <el-form ref="ruleForm" :model="ruleForm">
+        <el-form-item label="课程名称" prop="name" :rules="{ required: true, message: '课程名不能为空', trigger: 'blur'}">
+          <el-input v-model.trim="ruleForm.name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="课程教室" prop="adress" :rules="{ required: true, message: '课程教室不能为空', trigger: 'blur'}">
+          <el-input v-model.trim="ruleForm.adress"></el-input>
+        </el-form-item>
+        <el-form-item label="上课时间" prop="date" :rules="{ required: true, message: '上课时间不能为空', trigger: 'blur'}">
+          <el-input v-model.trim="ruleForm.date" placeholder="每周一第四节课"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')">点击提交</el-button>
+          <el-button @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
     </el-col>
   </el-row>
 </template>
@@ -30,6 +48,16 @@
   export default {
     created() {
       this.acquireData();
+    },
+    data() {
+      return {
+        tableData : [],
+        ruleForm: {
+          name: '',
+          adress: '',
+          date: '',
+        }
+      }
     },
     methods: {
       acquireData() {
@@ -51,11 +79,43 @@
           address: 'A栋教学楼302'
         }];
         this.tableData = data;
-      }
-    },
-    data() {
-      return {
-        tableData : []
+      },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid)=>{
+          if(valid){
+            console.log('yes');
+            console.log(this.ruleForm);
+            let data = this.ruleForm;
+            this.axios({
+              url: '/login',
+              method: 'post',
+              baseURL: '',
+              data: {}
+            })
+            .then(res => {
+              console.log(res.data);
+              console.log(res.status);
+              console.log(res.statusText);
+              console.log(res.headers);
+              console.log(res.config);
+              // 带查询参数，变成 /register?plan=private
+              // router.push({ path: '/std/allCourse', query: { plan: 'private' }})
+            })
+            .catch(res => {
+              console.log(res.data);
+              console.log(res.status);
+              console.log(res.statusText);
+              console.log(res.headers);
+              console.log(res.config);
+            })
+          }else{
+            console.log('error');
+            return false;
+          }
+        })
+      },
+      resetForm(fromName) {
+        this.$refs[fromName].resetFields();
       }
     }
   }

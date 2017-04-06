@@ -1,3 +1,21 @@
+.title{
+	width: 100%;
+	margin: 10px 0 20px 0;
+	border-bottom: 2px solid #eef1f6; 
+	position: relative;
+}
+.title p{
+	font-size: 20px;
+	color: #48576a;
+	font-weight: bold;
+	padding: 10px;
+	margin: 0;
+}
+.addButton{
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
 footer{
 	background-color: #324057;
 	color: #a4aebd;
