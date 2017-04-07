@@ -21,7 +21,7 @@
     </el-table-column>
     <el-table-column
       prop="tag"
-      label="标签"
+      label="状态"
       :filters="[{ text: '通过', value: '通过' }, { text: '不通过', value: '不通过' }]"
       :filter-method="filterTag">
       <template scope="scope">
@@ -34,10 +34,16 @@
       label="操作">
       <template scope="scope">
         <el-button
-          @click.native.prevent="selectRow(scope.$index, tableDate)"
+          @click.native.prevent="passRow(scope.$index, tableDate)"
           type="text"
           size="small">
           通过该课程
+        </el-button>
+        <el-button
+          @click.native.prevent="selectRow(scope.$index, tableDate)"
+          type="text"
+          size="small">
+          否决该课程
         </el-button>
       </template>
     </el-table-column>
@@ -81,7 +87,7 @@
           teachName: '王小虎',
           courseName: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
-          tag: '通过'
+          tag: '未审核'
         }, {
           date: '2016-05-04',
           teachName: '王小虎',
@@ -93,7 +99,7 @@
           teachName: '王小虎',
           courseName: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
-          tag: '通过'
+          tag: '未审核'
         }, {
           date: '2016-05-08',
           teachName: '王小虎',
@@ -111,11 +117,11 @@
           teachName: '王小虎',
           courseName: '王小虎',
           address: '上海市普陀区金沙江路 00 弄',
-          tag: '不通过'
+          tag: '未审核'
         }]
         this.tableDate = data;
       },
-      selectRow(index, rows) {
+      passRow(index, rows) {
         // rows.splice(index, 1);
         if(rows[index].tag !== '通过'){
           rows[index].tag = '通过';
@@ -127,6 +133,21 @@
           this.$message({
             showClose: true,
             message: '已通过该课程',
+            type: 'warning'
+          });
+        }
+      },
+      selectRow(index, rows) {
+        if(rows[index].tag !== '不通过'){
+          rows[index].tag = '不通过';
+          console.log(rows[index].tag);
+          // axios({
+
+          // })
+        }else{
+          this.$message({
+            showClose: true,
+            message: '已否决该课程',
             type: 'warning'
           });
         }
