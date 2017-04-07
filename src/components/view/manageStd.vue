@@ -3,7 +3,6 @@
     <div class="title">
       <p>学生管理</p>
       <div>
-        <el-button class="addButton" type="primary" v-popover:popover4>添加学生</el-button>
         <el-popover ref="popover4" placement="right" width="400" trigger="click">
           <el-form ref="ruleForm" :model="ruleForm" label-width="80px">
             <el-form-item label="账号" prop="number" :rules="{ required: true, message: '账号不能为空', trigger: 'blur'}">
@@ -25,6 +24,7 @@
             </el-form-item>
           </el-form>
         </el-popover>
+        <el-button class="addButton" type="primary" v-popover:popover4>添加学生</el-button>
       </div>
     </div>
     <el-table
