@@ -170,6 +170,7 @@
                   message: '新增成功',
                   type: 'success'
                 });
+                
                 // 带查询参数，变成 /register?plan=private
                 // router.push({ path: '/std/allCourse', query: { plan: 'private' }})
               })

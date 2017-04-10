@@ -32,17 +32,17 @@ module.exports = {
             target: 'http://115.159.110.236:80',
             changeOrigin: true
         },
-        '/api/admin/addStu': {
+        '/api': {
           target: 'http://127.0.0.1:8080',
           changeOrigin: true
         },
-        '/api': {
-          target: 'http://127.0.0.1:8080',
-          changeOrigin: true,
-          pathRewrite: {
-            '^/api/old-path' : '/api/new-path',     // rewrite path
-            '^/api/remove/path' : '/path' 
-        }
+        // '/api': {
+        //   target: 'http://127.0.0.1:8080',
+        //   changeOrigin: true,
+        //   pathRewrite: {
+        //     '^/api/old-path' : '/api/new-path',     // rewrite path
+        //     '^/api/remove/path' : '/path' 
+        // }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
