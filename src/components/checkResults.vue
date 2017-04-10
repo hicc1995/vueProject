@@ -27,6 +27,16 @@
         </el-form-item>
       </el-form>
     </el-card>
+    <el-dialog title="成绩列表" v-model="dialogTableVisible" size="large">
+      <el-table :data="gridData">
+        <el-table-column property="year" label="学年"></el-table-column>
+        <el-table-column property="semester" label="学期"></el-table-column>
+        <el-table-column property="courseNmae" label="课程名称"></el-table-column>
+        <el-table-column property="courseType" label="课程类型"></el-table-column>
+        <el-table-column property="testType" label="考察类型"></el-table-column>
+        <el-table-column property="userName" label="学生姓名"></el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -59,6 +69,8 @@ export default {
         callback();
       };
       return {
+        gridData: [],
+        dialogTableVisible : false,
         ruleForm2: {
           password: '',
           year: '',
@@ -85,8 +97,6 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
-            //www.ccqgq.top/query/api/login
             this.axios({
               url: '/login',
               baseURL: '/query/api',
@@ -95,10 +105,16 @@ export default {
             })
             .then(res => {
               console.log(res.data);
-              console.log(res.status);
-              console.log(res.statusText);
-              console.log(res.headers);
-              console.log(res.config);
+              if(res.data.data == ""){
+                this.$message({
+                  showClose: true,
+                  message: res.data.message,
+                  type: 'warning'
+                });
+              }else{
+                this.gridData = res.data.data;
+                this.dialogTableVisible = true;
+              }
             })
             .catch(res => {
               console.log(res.data);
@@ -106,6 +122,7 @@ export default {
               console.log(res.statusText);
               console.log(res.headers);
               console.log(res.config);
+              this.$message.error('请求发生错误');
             }) 
           } else {
             console.log('error submit!!');

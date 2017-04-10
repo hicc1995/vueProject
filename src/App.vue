@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view name="header"></router-view>
+    <!--<router-view name="header"></router-view>-->
     <router-view name="body"></router-view>
     <router-view name="content"></router-view>
     <footer>from cc</footer>

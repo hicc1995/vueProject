@@ -1,26 +1,19 @@
 <template>
-  <el-table
-    :data="tableData"
-    style="width: 100%">
-    <el-table-column
-      prop="date"
-      label="日期"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="className"
-      label="课程名"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="address"
-      label="地址">
-    </el-table-column>
-    <el-table-column
-      prop="teacher"
-      label="教师">
-    </el-table-column>
-  </el-table>
+  <div>
+    <div class="title">
+      <p>已选课程</p>
+    </div>
+    <el-table :data="tableData" style="width: 100%">
+      <el-table-column prop="date" label="日期" width="180">
+      </el-table-column>
+      <el-table-column prop="className" label="课程名" width="180">
+      </el-table-column>
+      <el-table-column prop="address" label="地址">
+      </el-table-column>
+      <el-table-column prop="teacher" label="教师">
+      </el-table-column>
+    </el-table>
+</div>
 </template>
 
 <script>
@@ -56,7 +49,7 @@
     },
     data() {
       return {
-        tableData : []
+        tableData: []
       }
     }
   }

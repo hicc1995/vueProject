@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<div class="title">
+			<p>个人中心</p>
+		</div>
 		<el-row>
 			<el-col :span="11" :offset="1">
 				<el-card class="box-card">

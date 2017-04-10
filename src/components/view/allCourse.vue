@@ -1,47 +1,31 @@
 <template>
-  <el-table
-    :data="tableDate"
-    border
-    style="width: 100%">
-    <el-table-column
-      prop="date"
-      label="日期">
-    </el-table-column>
-    <el-table-column
-      prop="name"
-      label="教师姓名">
-    </el-table-column>
-    <el-table-column
-      prop="province"
-      label="学院">
-    </el-table-column>
-    <el-table-column
-      prop="address"
-      label="教室">
-    </el-table-column>
-    <el-table-column
-      prop="tag"
-      label="标签"
-      :filters="[{ text: '已选', value: '已选' }, { text: '未选', value: '未选' }]"
-      :filter-method="filterTag">
-      <template scope="scope">
-        <el-tag
-          :type="scope.row.tag === '已选' ? 'primary' : 'success'"
-          close-transition>{{scope.row.tag}}</el-tag>
-      </template>
-    </el-table-column>
-    <el-table-column
-      label="操作">
-      <template scope="scope">
-        <el-button
-          @click.native.prevent="selectRow(scope.$index, tableDate)"
-          type="text"
-          size="small">
-          选择课程
-        </el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+  <div>
+    <div class="title">
+      <p>所有课程</p>
+    </div>
+    <el-table :data="tableDate" border style="width: 100%">
+      <el-table-column prop="date" label="日期">
+      </el-table-column>
+      <el-table-column prop="name" label="教师姓名">
+      </el-table-column>
+      <el-table-column prop="province" label="学院">
+      </el-table-column>
+      <el-table-column prop="address" label="教室">
+      </el-table-column>
+      <el-table-column prop="tag" label="标签" :filters="[{ text: '已选', value: '已选' }, { text: '未选', value: '未选' }]" :filter-method="filterTag">
+        <template scope="scope">
+          <el-tag :type="scope.row.tag === '已选' ? 'primary' : 'success'" close-transition>{{scope.row.tag}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作">
+        <template scope="scope">
+          <el-button @click.native.prevent="selectRow(scope.$index, tableDate)" type="text" size="small">
+            选择课程
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+</div>
 </template>
 <style scoped>
   .el-table .info-row {
@@ -64,12 +48,12 @@
           method: 'get',
           baseURL: '',
         })
-        .then(res => {
-          // let data = res.data;
-        })
-        .catch(res => {
+          .then(res => {
+            // let data = res.data;
+          })
+          .catch(res => {
 
-        })
+          })
         let data = [{
           date: '2016-05-03',
           name: '王小虎',
@@ -117,13 +101,13 @@
       },
       selectRow(index, rows) {
         // rows.splice(index, 1);
-        if(rows[index].tag !== '已选'){
+        if (rows[index].tag !== '已选') {
           rows[index].tag = '已选';
           console.log(rows[index].tag);
           axios({
 
           })
-        }else{
+        } else {
           this.$message({
             showClose: true,
             message: '不能重复选择课程',
@@ -137,7 +121,7 @@
     },
     data() {
       return {
-        tableDate : []
+        tableDate: []
       }
     }
   }

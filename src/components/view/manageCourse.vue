@@ -1,53 +1,34 @@
 <template>
-  <el-table
-    :data="tableDate"
-    border
-    style="width: 100%">
-    <el-table-column
-      prop="date"
-      label="日期">
-    </el-table-column>
-    <el-table-column
-      prop="courseName"
-      label="课程名称">
-    </el-table-column>
-    <el-table-column
-      prop="teachName"
-      label="教师名称">
-    </el-table-column>
-    <el-table-column
-      prop="address"
-      label="教室">
-    </el-table-column>
-    <el-table-column
-      prop="tag"
-      label="状态"
-      :filters="[{ text: '通过', value: '通过' }, { text: '不通过', value: '不通过' }]"
-      :filter-method="filterTag">
-      <template scope="scope">
-        <el-tag
-          :type="scope.row.tag === '通过' ? 'primary' : 'success'"
-          close-transition>{{scope.row.tag}}</el-tag>
-      </template>
-    </el-table-column>
-    <el-table-column
-      label="操作">
-      <template scope="scope">
-        <el-button
-          @click.native.prevent="passRow(scope.$index, tableDate)"
-          type="text"
-          size="small">
-          通过该课程
-        </el-button>
-        <el-button
-          @click.native.prevent="selectRow(scope.$index, tableDate)"
-          type="text"
-          size="small">
-          否决该课程
-        </el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+  <div>
+    <div class="title">
+      <p>课程管理</p>
+    </div>
+    <el-table :data="tableDate" border style="width: 100%">
+      <el-table-column prop="date" label="上课时间">
+      </el-table-column>
+      <el-table-column prop="courseName" label="课程名称">
+      </el-table-column>
+      <el-table-column prop="teachName" label="教师名称">
+      </el-table-column>
+      <el-table-column prop="address" label="教室">
+      </el-table-column>
+      <el-table-column prop="tag" label="状态" :filters="[{ text: '通过', value: '通过' }, { text: '不通过', value: '不通过' }]" :filter-method="filterTag">
+        <template scope="scope">
+          <el-tag :type="scope.row.tag === '通过' ? 'primary' : 'success'" close-transition>{{scope.row.tag}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作">
+        <template scope="scope">
+          <el-button @click.native.prevent="passRow(scope.$index, tableDate)" type="text" size="small">
+            通过该课程
+          </el-button>
+          <el-button @click.native.prevent="selectRow(scope.$index, tableDate)" type="text" size="small">
+            否决该课程
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 <style scoped>
   .el-table .info-row {
@@ -70,14 +51,14 @@
           method: 'get',
           baseURL: '',
         })
-        .then(res => {
-          // let data = res.data;
-        })
-        .catch(res => {
+          .then(res => {
+            // let data = res.data;
+          })
+          .catch(res => {
 
-        })
+          })
         let data = [{
-          date: '2016-05-03',
+          date: '周五第四节',
           teachName: '王小虎',
           courseName: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
@@ -123,13 +104,20 @@
       },
       passRow(index, rows) {
         // rows.splice(index, 1);
-        if(rows[index].tag !== '通过'){
+        if (rows[index].tag !== '通过') {
           rows[index].tag = '通过';
           console.log(rows[index].tag);
-          // axios({
-
-          // })
-        }else{
+          this.axios.post('/api/admin/auditCourPlan', {
+            id: 'Fred',
+            status: '1'
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (response) {
+            console.log(response);
+          });
+        } else {
           this.$message({
             showClose: true,
             message: '已通过该课程',
@@ -138,13 +126,20 @@
         }
       },
       selectRow(index, rows) {
-        if(rows[index].tag !== '不通过'){
+        if (rows[index].tag !== '不通过') {
           rows[index].tag = '不通过';
           console.log(rows[index].tag);
-          // axios({
-
-          // })
-        }else{
+          this.axios.post('/api/admin/auditCourPlan', {
+            id: 'Fred',
+            status: '2'
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (response) {
+            console.log(response);
+          });
+        } else {
           this.$message({
             showClose: true,
             message: '已否决该课程',
@@ -158,7 +153,7 @@
     },
     data() {
       return {
-        tableDate : []
+        tableDate: []
       }
     }
   }
