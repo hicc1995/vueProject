@@ -2,8 +2,9 @@
 	<div>
 		<el-row>
 			<el-carousel :interval="4000" type="card" height="200px">
-			    <el-carousel-item v-for="item in 6" :key="item">
+			    <el-carousel-item v-for="item in banners" :key="item">
 			      <h3>{{ item }}</h3>
+						<img :src="item.imgUrl">
 			    </el-carousel-item>
 			</el-carousel>
 		</el-row>
@@ -36,12 +37,32 @@ var login = require('../login.vue')
 var infoShow = require('../infoShow.vue')
 var checkResults = require('../checkResults.vue')
 
+// import one from './../assets/01.jpg'
+// import two from '../assets/02.jpg'
+// import three from '../assets/03.jpg'
+// import four from '../assets/04.jpg'
+// import five from '../assets/05.jpg'
+// var six = require('../assets/logo.png')
+// import six from '../assets/logo.png'
+
 module.exports = {
-	name: 'bar',
+	// name: 'bar',
   components: {
     'login': login,
     'info-show': infoShow,
     'check-results': checkResults
-  }
+  },
+	data() {
+		return {
+			banners: [
+				{imgUrl: '../assets/01.jpg'},
+				{imgUrl: '../assets/02.jpg'},
+				{imgUrl: '../assets/03.jpg'},
+				{imgUrl: '../assets/04.jpg'},
+				{imgUrl: '../assets/05.jpg'},
+				{imgUrl: '../assets/logo.png'},
+			]
+		}
+	}
 }
 </script>

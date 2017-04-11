@@ -48,9 +48,10 @@
               .then(res => {
                 console.log(res.data);
                 console.log(res.status);
-                console.log(res.statusText);
-                console.log(res.headers);
-                console.log(res.config);
+                this.$message({
+                  type: 'success',
+                  message: '发布成功'
+                });
                 // 带查询参数，变成 /register?plan=private
                 // router.push({ path: '/std/allCourse', query: { plan: 'private' }})
               })

@@ -1,83 +1,76 @@
 <template>
 	<div>
-	<el-popover ref="popover4" placement="right" width="400" trigger="click">
-	<el-form ref="ruleForm" :model="ruleForm" label-width="80px">
-	          <el-form-item label="账号" prop="number" :rules="{ required: true, message: '账号不能为空', trigger: 'blur'}">
-	            <el-input v-model.trim="ruleForm.number" auto-complete="off"></el-input>
-	          </el-form-item>
-	          <el-form-item label="密码" prop="pw" :rules="{ required: true, message: '密码不能为空', trigger: 'blur'}">
-	            <el-input v-model.trim="ruleForm.pw" type="password"></el-input>
-	          </el-form-item>
-	          <el-form-item label="身份" prop="resource" :rules="{ required: true, message: '身份不能为空', trigger: 'blur'}">
-	            <el-radio-group v-model.trim="ruleForm.resource">
-	              <el-radio label="0">学生</el-radio>
-	              <el-radio label="1">教师</el-radio>
-	              <el-radio label="2">管理员</el-radio>
-	            </el-radio-group>
-	          </el-form-item>
-	          <el-form-item>
-	            <el-button type="primary" @click="submitForm('ruleForm')">点击登录</el-button>
-	            <el-button @click="resetForm('ruleForm')">重置</el-button>
-	          </el-form-item>
-	        </el-form>
-	</el-popover>
-
-	<el-button v-popover:popover4>click 激活</el-button>
+		<el-row>
+			<!--<el-carousel :interval="4000" type="card" height="200px">
+			    <el-carousel-item v-for="item in banners" :key="item">
+			      <h3>{{ item }}</h3>
+						<img :src="item.imgUrl">
+			    </el-carousel-item>
+			</el-carousel>-->
+      <el-carousel :interval="4000" type="card">
+			    <el-carousel-item class="two">
+			    </el-carousel-item>
+          <el-carousel-item>
+						<img src="http://127.0.0.1:8090/src/assets/02.jpg">
+			    </el-carousel-item>
+          <el-carousel-item class="one">
+			    </el-carousel-item>
+          <el-carousel-item>
+						<img src="http://127.0.0.1:8090/src/assets/04.jpg">
+			    </el-carousel-item>
+			</el-carousel>
+		</el-row>
 	</div>
 </template>
-
+<style scoped>
+	.el-carousel__item h3 {
+	  color: #475669;
+	  font-size: 14px;
+	  opacity: 0.75;
+	  line-height: 200px;
+	  margin: 0;
+	}
+	
+	.el-carousel__item:nth-child(2n) {
+	  background-color: #99a9bf;
+	}
+	.one{
+    /*width: 200px;*/
+    /*height: 400px;*/
+    background: url('../../assets/03.jpg');
+    background-size:  100% 100%;
+  }
+  .two{
+    background: url('../../assets/01.jpg');
+    background-size:  100% 100%;
+  }
+	.el-carousel__item:nth-child(2n+1) {
+	  background-color: #d3dce6;
+	}
+</style>
 <script>
 
-// var tableControl = require('../tableControl.vue')
+// import one from './../assets/01.jpg'
+// import two from '../assets/02.jpg'
+// import three from '../assets/03.jpg'
+// import four from '../assets/04.jpg'
+// import five from '../assets/05.jpg'
+// var six = require('../assets/logo.png')
+// import six from '../assets/logo.png'
 
-	export default {
-	methods:{
-		submitForm(formName) {
-				this.$refs[formName].validate((valid) => {
-					if (valid) {
-						console.log('yes');
-						console.log(this.ruleForm);
-						let data = this.ruleForm;
-						this.axios({
-								url: '/login',
-								method: 'post',
-								baseURL: '',
-								data: {}
-							})
-							.then(res => {
-								console.log(res.data);
-								console.log(res.status);
-								console.log(res.statusText);
-								console.log(res.headers);
-								console.log(res.config);
-								// 带查询参数，变成 /register?plan=private
-								// router.push({ path: '/std/allCourse', query: { plan: 'private' }})
-							})
-							.catch(res => {
-								console.log(res.data);
-								console.log(res.status);
-								console.log(res.statusText);
-								console.log(res.headers);
-								console.log(res.config);
-							})
-					} else {
-						console.log('error');
-						return false;
-					}
-				})
-			},
-			resetForm(fromName) {
-				this.$refs[fromName].resetFields();
-			}
-	},
+module.exports = {
+	// name: 'bar',
 	data() {
 		return {
-			ruleForm: {
-				number: '',
-				resource: '',
-				pw: '',
-			}
-		};
+			banners: [
+				{imgUrl: 'assets/01.jpg'},
+				{imgUrl: '../../assets/02.jpg'},
+				{imgUrl: './assets/03.jpg'},
+				{imgUrl: '../assets/04.jpg'},
+				{imgUrl: '../assets/05.jpg'},
+				{imgUrl: '../assets/logo.png'},
+			]
+		}
 	}
 }
 </script>

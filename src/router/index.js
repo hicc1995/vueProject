@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import header from '@/components/header'
+import header from '@/components/header'
 // import Hello from '@/components/Hello'
-// import foo from '@/components/view/foo'
+import foo from '@/components/view/foo'
 import bar from '@/components/view/bar'
 
 import std from '@/components/view/std'
@@ -30,18 +30,21 @@ export default new Router({
     //     body:Hello
     //   }
     // },
-    // {
-    //   path: '/foo',
-    //   name: 'foo',
-    //   components: {
-    //     header:header,
-    //     body:foo
-    //   }
-    // },
+    {
+      path: '/foo',
+      name: 'foo',
+      components: {
+        header:header,
+        body:foo
+      }
+    },
     {
       path: '/',
       name: 'bar',
-      components: {body:bar}
+      components: {
+        header:header,
+        body:bar
+      }
     },
     {
       path: '/std', components: {content:std},

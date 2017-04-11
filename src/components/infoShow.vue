@@ -5,7 +5,7 @@
          <el-tab-pane label="通知通告" name="first">
            <el-collapse v-model="activeNames" accordion >
            <div  v-for="item in inform" :key="item">
-             <el-collapse-item :title="item.title" :name="item">
+             <el-collapse-item :title="item.title">
                <div>{{ item.text }}</div>
              </el-collapse-item>
            </div>
@@ -27,7 +27,7 @@
          <el-tab-pane label="就业信息" name="second">
            <el-collapse v-model="activeNames" accordion >
            <div  v-for="item in mess" :key="item">
-             <el-collapse-item :title="item.title" :name="item">
+             <el-collapse-item :title="item.title">
                <div>{{ item.text }}</div>
              </el-collapse-item>
            </div>
@@ -41,10 +41,10 @@
 <script>
 
 module.exports = {
-  name: 'checkResults',
+  name: 'infoShow',
   data: function () {
     return {
-      activeNames: ['1'],
+      activeNames: 1,
       activeName2: 'first',
       inform:[],
       mess:[]

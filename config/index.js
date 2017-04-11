@@ -33,7 +33,7 @@ module.exports = {
             changeOrigin: true
         },
         '/api': {
-          target: 'http://127.0.0.1:8080',
+          target: 'http://127.0.0.1:9999',
           changeOrigin: true
         },
         // '/api': {

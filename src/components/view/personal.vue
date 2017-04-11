@@ -4,7 +4,32 @@
 			<p>个人中心</p>
 		</div>
 		<el-row>
-			<el-col :span="11" :offset="1">
+			
+			<el-col :span="11" :offset="12">
+				<el-card class="box-card">
+					<div slot="header" class="clearfix">
+					  <span style="line-height: 36px;">修改密码</span>
+					</div>
+					<el-form ref="form" :model="form" :rules="rules" label-width="80px">
+						<el-form-item label="学号" prop="number">
+						  <el-input v-model.trim="form.number" prop="number"></el-input>
+						</el-form-item>
+						<el-form-item label="原始密码" prop="pw">
+						  <el-input v-model.trim="form.pw" type="password"></el-input>
+						</el-form-item>
+						<el-form-item label="新密码" prop="pw2">
+						  <el-input v-model.trim="form.pw2" type="password"></el-input>
+						</el-form-item>
+						<el-form-item>
+						  <el-button type="primary" @click="submitForm('form')">提交</el-button>
+						  <el-button @click="resetForm('form')">重置</el-button>
+						</el-form-item>
+					</el-form>
+				</el-card>
+			</el-col>
+		</el-row>
+		<el-row>
+			<el-col :span="11" :offset="12">
 				<el-card class="box-card">
 					<div slot="header" class="clearfix">
 					  <span style="line-height: 36px;">订阅信息</span>
@@ -21,26 +46,6 @@
 					  on-color="#13ce66"
 					  off-color="#ff4949">
 					</el-switch>
-				</el-card>
-			</el-col>
-			<el-col :span="11">
-				<el-card class="box-card">
-				<h5>修改密码</h5>
-					<el-form ref="form" :model="form" :rules="rules" label-width="80px">
-						<el-form-item label="学号" prop="number">
-						  <el-input v-model.trim="form.number" prop="number"></el-input>
-						</el-form-item>
-						<el-form-item label="原始密码" prop="pw">
-						  <el-input v-model.trim="form.pw" type="password"></el-input>
-						</el-form-item>
-						<el-form-item label="新密码" prop="pw2">
-						  <el-input v-model.trim="form.pw2" type="password"></el-input>
-						</el-form-item>
-						<el-form-item>
-						  <el-button type="primary" @click="submitForm('form')">提交</el-button>
-						  <el-button @click="resetForm('form')">重置</el-button>
-						</el-form-item>
-					</el-form>
 				</el-card>
 			</el-col>
 		</el-row>

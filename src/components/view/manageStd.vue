@@ -3,7 +3,7 @@
     <div class="title">
       <p>学生管理</p>
       <div>
-        <el-popover ref="popover4" placement="right" width="400" trigger="click">
+        <el-dialog title="学生管理" v-model="dialogFormVisible">
           <el-form ref="ruleForm" :model="ruleForm" label-width="85px">
             <el-form-item label="学生账号" prop="stuNumber" :rules="{ required: true, message: '账号不能为空', trigger: 'blur'}">
               <el-input v-model.trim="ruleForm.stuNumber" auto-complete="off"></el-input>
@@ -22,8 +22,8 @@
               <el-button @click="resetForm('ruleForm')">重置</el-button>
             </el-form-item>
           </el-form>
-        </el-popover>
-        <el-button class="addButton" @click.native.prevent="addBtn()" type="primary" v-popover:popover4>添加学生</el-button>
+        </el-dialog>
+        <el-button class="addButton" @click.native.prevent="addBtn()" type="primary">添加学生</el-button>
       </div>
     </div>
     <el-table :data="tableDate" border style="width: 100%">
@@ -33,6 +33,8 @@
 </el-table-column>
 <el-table-column prop="college" label="学生学院">
 </el-table-column>
+<el-table-column prop="classGrade" label="学生班级">
+</el-table-column>
 <el-table-column prop="email" label="学生邮箱">
 </el-table-column>
 <el-table-column label="操作">
@@ -40,7 +42,7 @@
     <el-button @click.native.prevent="handleDelete(scope.$index, tableDate)" type="text" size="small">
       删除该学生
     </el-button>
-    <el-popover ref="popover" placement="right" width="400" trigger="click">
+    <!--<el-popover ref="popover" placement="right" width="400" trigger="click">
           <el-form ref="ruleForm" :model="ruleForm" label-width="85px">
             <el-form-item label="学生账号" prop="stuNumber" :rules="{ required: true, message: '账号不能为空', trigger: 'blur'}">
               <el-input v-model.trim="ruleForm.stuNumber" auto-complete="off"></el-input>
@@ -56,8 +58,8 @@
               <el-button @click="resetForm('ruleForm')">重置</el-button>
             </el-form-item>
           </el-form>
-        </el-popover>
-    <el-button @click.native.prevent="handleEdit(scope.$index, tableDate)" type="text" size="small" v-popover:popover>编辑</el-button>
+        </el-popover>-->
+    <el-button @click.native.prevent="handleEdit(scope.$index, tableDate)" type="text" size="small">编辑</el-button>
   </template>
 </el-table-column>
 </el-table>
@@ -95,36 +97,43 @@
           stuNumber: '0313303',
           stuName: '王小虎',
           college: '通信与信息工程学院',
+          classGrade: '2',
           email: '153@456.com'
         }, {
           stuNumber: '0313302',
           stuName: '王小虎',
           college: '通信与信息工程学院',
+          classGrade: '2',
           email: '153@456.com'
         }, {
           stuNumber: '0313304',
           stuName: '王小虎',
           college: '通信与信息工程学院',
+          classGrade: '2',
           email: '153@456.com'
         }, {
           stuNumber: '0313301',
           stuName: '王小虎',
           college: '通信与信息工程学院',
+          classGrade: '2',
           email: '153@456.com'
         }, {
           stuNumber: '0313308',
           stuName: '王小虎',
           college: '通信与信息工程学院',
+          classGrade: '2',
           email: '153@456.com'
         }, {
           stuNumber: '0313306',
           stuName: '王小虎',
           college: '通信与信息工程学院',
+          classGrade: '2',
           email: '153@456.com'
         }, {
           stuNumber: '0313307',
           stuName: '王小虎',
           college: '通信与信息工程学院',
+          classGrade: '2',
           email: 'asda@111.com'
         }]
         this.tableDate = data;
@@ -135,18 +144,33 @@
           college: '',
           stuName: '',
           classGrade: '',
-        }
+        };
+        this.dialogFormVisible = true;
       },
       handleEdit(index, row) {
         console.log(index, row);
         this.ruleForm.stuNumber = row[index].stuNumber;
         this.ruleForm.college = row[index].college;
         this.ruleForm.stuName = row[index].stuName;
-        return {index, row}
+        this.dialogFormVisible = true;
       },
       handleDelete(index, row) {
         console.log(index, row);
-        // rows.splice(index, 1);
+        this.axios.get('/api/admin/delStu?ID=12345')
+          .then(res => {
+            // let data = res.data;
+            this.$message({
+                  message: '删除学生成功',
+                  type: 'success'
+                });
+            rows.splice(index, 1);
+          })
+          .catch(res => {
+            this.$message({
+                  message: '删除学生失败',
+                  type: 'error'
+                });
+          });
       },
       submitForm(formName, index, row) {
         this.$refs[formName].validate((valid) => {
@@ -170,16 +194,20 @@
                   message: '新增成功',
                   type: 'success'
                 });
-                
+                this.dialogFormVisible = false;
+                //刷新表格
+                this.acquireDate();
                 // 带查询参数，变成 /register?plan=private
                 // router.push({ path: '/std/allCourse', query: { plan: 'private' }})
               })
               .catch(res => {
                 console.log(res.data);
                 console.log(res.status);
-                console.log(res.statusText);
-                console.log(res.headers);
-                console.log(res.config);
+                this.$message({
+                  message: '新增失败',
+                  type: 'error'
+                });
+                this.dialogFormVisible = false;
               })
           } else {
             console.log('error');
@@ -199,7 +227,8 @@
           stuName: '',
           classGrade: '',
         },
-        tableDate: []
+        tableDate: [],
+        dialogFormVisible: false
       }
     }
   }
