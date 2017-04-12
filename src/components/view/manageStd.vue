@@ -42,23 +42,6 @@
     <el-button @click.native.prevent="handleDelete(scope.$index, tableDate)" type="text" size="small">
       删除该学生
     </el-button>
-    <!--<el-popover ref="popover" placement="right" width="400" trigger="click">
-          <el-form ref="ruleForm" :model="ruleForm" label-width="85px">
-            <el-form-item label="学生账号" prop="stuNumber" :rules="{ required: true, message: '账号不能为空', trigger: 'blur'}">
-              <el-input v-model.trim="ruleForm.stuNumber" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="学生姓名" prop="stuName" :rules="{ required: true, message: '姓名不能为空', trigger: 'blur'}">
-              <el-input v-model.trim="ruleForm.stuName" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="学生学院" prop="college" :rules="{ required: true, message: '学院不能为空', trigger: 'blur'}">
-              <el-input v-model.trim="ruleForm.college" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm', scope.$index, tableDate)">提交</el-button>
-              <el-button @click="resetForm('ruleForm')">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </el-popover>-->
     <el-button @click.native.prevent="handleEdit(scope.$index, tableDate)" type="text" size="small">编辑</el-button>
   </template>
 </el-table-column>
@@ -83,7 +66,7 @@
     methods: {
       acquireDate() {
         this.axios({
-          url: '',
+          url: '/api/admin/stuList',
           method: 'get',
           baseURL: '',
         })

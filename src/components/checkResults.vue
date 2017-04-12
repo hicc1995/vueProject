@@ -35,6 +35,7 @@
         <el-table-column property="courseType" label="课程类型"></el-table-column>
         <el-table-column property="testType" label="考察类型"></el-table-column>
         <el-table-column property="userName" label="学生姓名"></el-table-column>
+        <el-table-column property="count" label="成绩"></el-table-column>
       </el-table>
     </el-dialog>
   </div>

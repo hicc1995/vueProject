@@ -7,8 +7,8 @@
     <el-form-item label="账号" prop="number" :rules="{ required: true, message: '账号不能为空', trigger: 'blur'}">
       <el-input v-model.trim="ruleForm.number" auto-complete="off"></el-input>
     </el-form-item>
-    <el-form-item label="密码" prop="pw" :rules="{ required: true, message: '密码不能为空', trigger: 'blur'}">
-      <el-input v-model.trim="ruleForm.pw" type="password"></el-input>
+    <el-form-item label="密码" prop="password" :rules="{ required: true, message: '密码不能为空', trigger: 'blur'}">
+      <el-input v-model.trim="ruleForm.password" type="password"></el-input>
     </el-form-item>
     <el-form-item label="身份" prop="resource" :rules="{ required: true, message: '身份不能为空', trigger: 'blur'}">
       <el-radio-group v-model.trim="ruleForm.resource">
@@ -32,7 +32,7 @@ export default {
       ruleForm: {
         number: '',
         resource: '',
-        pw: '',
+        password: '',
       }
     }
   },
@@ -40,30 +40,33 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid)=>{
         if(valid){
-          console.log('yes');
           console.log(this.ruleForm);
           let data = this.ruleForm;
           this.axios({
-            url: '/login',
+            url: '/api/user/login',
             method: 'post',
-            baseURL: '',
-            data: {}
+            data: this.ruleForm
           })
           .then(res => {
             console.log(res.data);
-            console.log(res.status);
-            console.log(res.statusText);
-            console.log(res.headers);
-            console.log(res.config);
-            // 带查询参数，变成 /register?plan=private
-            // router.push({ path: '/std/allCourse', query: { plan: 'private' }})
+            if(res.data.code == 0){
+              if(this.ruleForm.resource == 0){
+                this.$router.push({ path: '/std/allCourse'})
+              }else if(this.ruleForm.resource == 2){
+                this.$router.push({ path: '/admin/manageStd'})
+              }else{
+                this.$router.push({ path: '/teach/coursePlan'})
+              }
+            }else{
+              this.$message({
+                  message: res.data.message,
+                  type: 'error'
+                });
+            }
+            
           })
           .catch(res => {
             console.log(res.data);
-            console.log(res.status);
-            console.log(res.statusText);
-            console.log(res.headers);
-            console.log(res.config);
           })
         }else{
           console.log('error');

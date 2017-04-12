@@ -82,7 +82,7 @@
     methods: {
       acquireDate() {
         this.axios({
-          url: '',
+          url: 'api/admin/taeList',
           method: 'get',
           baseURL: '',
         })
