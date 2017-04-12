@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <!--<router-view name="header"></router-view>-->
-    <router-view name="body"></router-view>
-    <router-view name="content"></router-view>
-    <footer>from cc</footer>
+    <router-view name="body" class="body"></router-view>
+    <router-view name="content" class="body"></router-view>
+    <!--<footer>from cc</footer>-->
   </div>
 </template>
 <script>
