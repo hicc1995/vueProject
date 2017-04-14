@@ -5,6 +5,7 @@
       <div>
         <el-dialog title="学生管理" v-model="dialogFormVisible">
           <el-form ref="ruleForm" :model="ruleForm" label-width="85px">
+            <input v-model.trim="ruleForm.id" hidden></input>
             <el-form-item label="学生账号" prop="stuNumber" :rules="{ required: true, message: '账号不能为空', trigger: 'blur'}">
               <el-input v-model.trim="ruleForm.stuNumber" auto-complete="off"></el-input>
             </el-form-item>
@@ -35,7 +36,7 @@
 </el-table-column>
 <el-table-column prop="classGrade" label="学生班级">
 </el-table-column>
-<el-table-column prop="email" label="学生邮箱">
+<el-table-column prop=" " label="学生邮箱">
 </el-table-column>
 <el-table-column label="操作">
   <template scope="scope">
@@ -46,7 +47,8 @@
   </template>
 </el-table-column>
 </el-table>
-
+<el-pagination layout="prev, pager, next" :total="pages" :current-page="currentPage" @current-change="handleCurrentChange">
+</el-pagination>
 </div>
 </template>
 <style scoped>
@@ -61,22 +63,26 @@
 <script>
   export default {
     created() {
-      this.acquireDate();
+       this.acquireDate(1);
     },
     methods: {
-      acquireDate() {
-        this.axios({
-          url: '/api/admin/stuList',
-          method: 'get',
-          baseURL: '',
+      acquireDate(pageNum) {
+        this.axios.get('/api/admin/stuList',{
+          params: {
+            pageNum: pageNum, //第几页
+            pageSize: 10,  //每页数据(默认10条)
+          }
         })
           .then(res => {
             // let data = res.data;
+            this.tableDate = res.data.data.list;
+            this.pages = res.data.data.pages;
           })
           .catch(res => {
 
           })
         let data = [{
+          id: 1,
           stuNumber: '0313303',
           stuName: '王小虎',
           college: '通信与信息工程学院',
@@ -121,6 +127,9 @@
         }]
         this.tableDate = data;
       },
+      handleCurrentChange(val) {
+        this.acquireDate(val);
+      },
       addBtn() {
         this.ruleForm = {
           stuNumber: '',
@@ -135,21 +144,26 @@
         this.ruleForm.stuNumber = row[index].stuNumber;
         this.ruleForm.college = row[index].college;
         this.ruleForm.stuName = row[index].stuName;
+        this.ruleForm.id = row[index].id;
         this.dialogFormVisible = true;
       },
       handleDelete(index, row) {
         console.log(index, row);
-        this.axios.get('/api/admin/delStu?ID=12345')
+        this.axios.get('/api/admin/delStu', {
+          params: {
+            id: row[index].id
+          }
+        })
           .then(res => {
-            // let data = res.data;
-            this.$message({
+            // let data = res.d ata; 
+            this.$message ({
                   message: '删除学生成功',
-                  type: 'success'
-                });
-            rows.splice(index, 1);
+                  type: 'success' 
+                }); 
+            row.splice(index, 1);
           })
           .catch(res => {
-            this.$message({
+            this.$message({ 
                   message: '删除学生失败',
                   type: 'error'
                 });
@@ -158,34 +172,26 @@
       submitForm(formName, index, row) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log('yes');
-            console.log(index);
-            let data = this.ruleForm;
+            console.log(this.ruleForm)
             this.axios({
               url: '/addStu',
               baseURL: '/api/admin',
               method: 'post',
               data: this.ruleForm
             })
+
               .then(res => {
                 console.log(res.data);
-                console.log(res.status);
-                console.log(res.statusText);
-                console.log(res.headers);
-                console.log(res.config);
                 this.$message({
                   message: '新增成功',
                   type: 'success'
                 });
                 this.dialogFormVisible = false;
                 //刷新表格
-                this.acquireDate();
-                // 带查询参数，变成 /register?plan=private
-                // router.push({ path: '/std/allCourse', query: { plan: 'private' }})
+                this.acquireDate(this.currentPage);
               })
               .catch(res => {
                 console.log(res.data);
-                console.log(res.status);
                 this.$message({
                   message: '新增失败',
                   type: 'error'
@@ -211,7 +217,9 @@
           classGrade: '',
         },
         tableDate: [],
-        dialogFormVisible: false
+        dialogFormVisible: false,
+        pages: 1,
+        currentPage: 1,
       }
     }
   }

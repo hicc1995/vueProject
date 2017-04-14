@@ -3,7 +3,7 @@
 <el-card class="box-card">
 <h5>登录
 </h5>
-  <el-form ref="ruleForm" :model="ruleForm" label-width="80px">
+  <el-form ref="ruleForm" :model="ruleForm" label-width="60px">
     <el-form-item label="账号" prop="number" :rules="{ required: true, message: '账号不能为空', trigger: 'blur'}">
       <el-input v-model.trim="ruleForm.number" auto-complete="off"></el-input>
     </el-form-item>
@@ -42,34 +42,34 @@ export default {
         if(valid){
           console.log(this.ruleForm);
           let data = this.ruleForm;
-          this.axios({
-            url: '/api/user/login',
-            method: 'post',
-            data: this.ruleForm
-          })
-          .then(res => {
-            console.log(res.data);
-            if(res.data.code == 0){
-              if(this.ruleForm.resource == 0){
-                this.$router.push({ path: '/std/allCourse'})
-              }else if(this.ruleForm.resource == 2){
-                this.$router.push({ path: '/admin/manageStd'})
-              }else{
-                this.$router.push({ path: '/teach/coursePlan'})
-              }
-            }else{
-              this.$message({
-                  message: res.data.message,
-                  type: 'error'
-                });
-            }
+          this.$router.push({ path: '/std/allCourse'})
+          // this.axios({
+          //   url: '/api/user/login',
+          //   method: 'post',
+          //   data: this.ruleForm
+          // })
+          // .then(res => {
+          //   console.log(res.data);
+          //   if(res.data.code == 0){
+          //     if(this.ruleForm.resource == 0){
+          //       this.$router.push({ path: '/std/allCourse'})
+          //     }else if(this.ruleForm.resource == 2){
+          //       this.$router.push({ path: '/admin/manageStd'})
+          //     }else{
+          //       this.$router.push({ path: '/teach/coursePlan'})
+          //     }
+          //   }else{
+          //     this.$message({
+          //         message: res.data.message,
+          //         type: 'error'
+          //       });
+          //   }
             
-          })
-          .catch(res => {
-            console.log(res.data);
-          })
+          // })
+          // .catch(res => {
+          //   console.log(res.data);
+          // })
         }else{
-          console.log('error');
           return false;
         }
       })

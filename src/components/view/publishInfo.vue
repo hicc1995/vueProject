@@ -2,17 +2,17 @@
   <div>
     <div class="title"><p>信息发布</p></div>
     <el-form ref="ruleForm" :model="ruleForm" label-width="80px">
-      <el-form-item label="标题" prop="name" :rules="{ required: true, message: '标题不能为空', trigger: 'blur'}">
-        <el-input v-model="ruleForm.name"></el-input>
+      <el-form-item label="标题" prop="title" :rules="{ required: true, message: '标题不能为空', trigger: 'blur'}">
+        <el-input v-model="ruleForm.title"></el-input>
       </el-form-item>
-      <el-form-item label="类别" prop="region" :rules="{ required: true, message: '类别不能为空', trigger: 'blur'}">
-        <el-select v-model="ruleForm.region" placeholder="请选择类别">
-          <el-option label="就业信息" value="1"></el-option>
-          <el-option label="通知通告" value="2"></el-option>
+      <el-form-item label="类别" prop="type" :rules="{ required: true, message: '类别不能为空', trigger: 'blur'}">
+        <el-select v-model="ruleForm.type" placeholder="请选择类别">
+          <el-option label="就业信息" value="0"></el-option>
+          <el-option label="通知通告" value="1"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="内容" prop="desc" :rules="{ required: true, message: '内容不能为空', trigger: 'blur'}">
-        <el-input type="textarea" v-model.trim="ruleForm.desc"></el-input>
+      <el-form-item label="内容" prop="content" :rules="{ required: true, message: '内容不能为空', trigger: 'blur'}">
+        <el-input type="textarea" v-model.trim="ruleForm.content"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -26,9 +26,9 @@
     data() {
       return {
         ruleForm: {
-          name: '',
-          region: '',
-          desc: ''
+          title: '',
+          type: '',
+          content: ''
         }
       }
     },
@@ -38,12 +38,10 @@
           if (valid) {
             console.log('yes');
             console.log(this.ruleForm);
-            let data = this.ruleForm;
             this.axios({
-                url: '/login',
+                url: '/api/message/creatMessage',
                 method: 'post',
-                baseURL: '',
-                data: {}
+                data: this.ruleForm
               })
               .then(res => {
                 console.log(res.data);
@@ -52,15 +50,9 @@
                   type: 'success',
                   message: '发布成功'
                 });
-                // 带查询参数，变成 /register?plan=private
-                // router.push({ path: '/std/allCourse', query: { plan: 'private' }})
               })
               .catch(res => {
                 console.log(res.data);
-                console.log(res.status);
-                console.log(res.statusText);
-                console.log(res.headers);
-                console.log(res.config);
               })
           } else {
             console.log('error');

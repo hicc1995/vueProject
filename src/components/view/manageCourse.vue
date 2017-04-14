@@ -3,28 +3,38 @@
     <div class="title">
       <p>课程管理</p>
     </div>
+    <label>课程状态:</label>
+    <el-select v-model="selectStatus" placeholder="请选择">
+      <el-option label="待审核" :value="0"></el-option>
+      <el-option label="不通过" :value="2"></el-option>
+      <el-option label="通过" :value="1"></el-option>
+    </el-select>
     <el-table :data="tableDate" border style="width: 100%">
-<el-table-column prop="date" label="上课时间">
-</el-table-column>
-<el-table-column prop="couName" label="课程名称">
-</el-table-column>
-<el-table-column prop="taeName" label="教师名称">
-</el-table-column>
-<el-table-column prop="college" label="学院">
-</el-table-column>
-<el-table-column prop="status" label="状态">
-</el-table-column>
-<el-table-column label="操作">
-  <template scope="scope">
-    <el-button @click.native.prevent="passRow(scope.$index, tableDate)" type="text" size="small">
-      通过该课程
-    </el-button>
-    <el-button @click.native.prevent="selectRow(scope.$index, tableDate)" type="text" size="small">
-      否决该课程
-    </el-button>
-  </template>
-</el-table-column>
-</el-table>
+      <el-table-column prop="date" label="上课时间">
+      </el-table-column>
+      <el-table-column prop="couName" label="课程名称">
+      </el-table-column>
+      <el-table-column prop="startTime" label="开始时间">
+      </el-table-column>
+      <el-table-column prop="endTime" label="结束时间">
+      </el-table-column>
+      <el-table-column prop="taeName" label="教师名称">
+      </el-table-column>
+      <el-table-column prop="college" label="学院">
+      </el-table-column>
+      <el-table-column prop="status" label="状态">
+      </el-table-column>
+      <el-table-column label="操作">
+        <template scope="scope">
+          <el-button @click.native.prevent="passRow(scope.$index, tableDate)" type="text" size="small">
+            通过该课程
+          </el-button>
+          <el-button @click.native.prevent="selectRow(scope.$index, tableDate)" type="text" size="small">
+            否决该课程
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
 <el-pagination layout="prev, pager, next" :total="pages" :current-page="currentPage" @current-change="handleCurrentChange">
 </el-pagination>
 </div>
@@ -40,20 +50,24 @@
   .el-pagination {
     padding: 0;
   }
+  label{
+    color: #48576a;
+    padding: 0 10px 0 20px;
+  }
 </style>
 <script>
   export default {
     created() {
-      this.acquireDate(1);
+      console.log(this.selectStatus)
+      this.acquireDate(1,this.selectStatus);
     },
     methods: {
-      acquireDate(pageNum, status) {
-        let data = [];
+      acquireDate(pageNum, selectStatus) {
         this.axios.get('/api/admin/courPlanList',{
           params: {
             pageNum: pageNum, //第几页
             pageSize: 10,  //每页数据(默认10条)
-            // status: status,  //课程状态(默认未审核)
+            status: selectStatus,  //课程状态(默认未审核)
           }
         })
           .then(res => {
@@ -66,6 +80,10 @@
               }else{
                 res.data.data.list[i].status = '不通过';
               }
+              let d = new Date(res.data.data.list[i].startTime);
+              res.data.data.list[i].startTime = d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+              let t = new Date(res.data.data.list[i].endTime);
+              res.data.data.list[i].endTime = t.getFullYear()+'-'+t.getMonth()+'-'+t.getDate();
             }
             this.tableDate = res.data.data.list;
             this.pages = res.data.data.pages;
@@ -77,9 +95,8 @@
       },
       handleCurrentChange(val) {
         // this.currentPage = val;
-        let currentPage = val;
-        console.log('当前页: '+currentPage);
-        this.acquireDate(val);
+        console.log(this.selectStatus)
+        this.acquireDate(val, this.selectStatus);
       },
       passRow(index, rows) {
         console.log(rows[index].id);
@@ -89,7 +106,11 @@
             status: '1'
           })
             .then(function (response) {
-              console.log(response);
+              this.$message({
+                showClose: true,
+                message: '操作成功',
+                type: 'success'
+              });
               rows[index].tag = '通过';
             })
             .catch(function (response) {
@@ -105,14 +126,18 @@
       },
       selectRow(index, rows) {
         if (rows[index].tag !== '不通过') {
-          rows[index].tag = '不通过';
           console.log(rows[index].tag);
           this.axios.post('/api/admin/auditCourPlan', {
             id: rows[index].id,
             status: '2'
           })
             .then(function (response) {
-              console.log(response);
+              rows[index].tag = '不通过';
+              this.$message({
+                showClose: true,
+                message: '操作成功',
+                type: 'success'
+              });
             })
             .catch(function (response) {
               console.log(response);
@@ -126,11 +151,18 @@
         }
       }
     },
+    watch: {
+      selectStatus: function(val, oldval){
+        console.log(val);
+        this.acquireDate(this.pages, this.selectStatus);
+      }
+    },
     data() {
       return {
         tableDate: [],
         currentPage: 1,
         pages: 1,
+        selectStatus: 0,
       }
     }
   }

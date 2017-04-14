@@ -5,6 +5,7 @@
       <div>
         <el-dialog title="教师管理" v-model="dialogFormVisible">
           <el-form ref="ruleForm" :model="ruleForm" label-width="85px">
+            <input v-model.trim="ruleForm.id" hidden></input>
             <el-form-item label="教师账号" prop="teaNumber" :rules="{ required: true, message: '账号不能为空', trigger: 'blur'}">
               <el-input v-model.trim="ruleForm.teaNumber" auto-complete="off"></el-input>
             </el-form-item>
@@ -14,8 +15,19 @@
             <el-form-item label="教师学院" prop="college" :rules="{ required: true, message: '学院不能为空', trigger: 'blur'}">
               <el-input v-model.trim="ruleForm.college" auto-complete="off"></el-input>
             </el-form-item>
+            <el-form-item label="职称" prop="professional" :rules="{ required: true, message: '职称不能为空', trigger: 'blur'}">
+              <!--<el-input v-model.trim="ruleForm.professional"></el-input>-->
+              <el-select v-model="ruleForm.professional" auto-complete="off" placeholder="请选择">
+                <el-option label="助教" :value="1"></el-option>
+                <el-option label="讲师" :value="2"></el-option>
+                <el-option label="教授" :value="3"></el-option>
+              </el-select>
+            </el-form-item>
             <el-form-item label="电话" prop="phone" :rules="{ required: true, message: '电话不能为空', trigger: 'blur'}">
               <el-input v-model.trim="ruleForm.phone"></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱" prop="email" :rules="{ required: true, message: '邮箱不能为空', trigger: 'blur'}">
+              <el-input v-model.trim="ruleForm.email"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -32,6 +44,8 @@
       <el-table-column prop="teaName" label="教师姓名">
       </el-table-column>
       <el-table-column prop="college" label="教师学院">
+      </el-table-column>
+      <el-table-column prop="professional" label="职称">
       </el-table-column>
       <el-table-column prop="email" label="教师邮箱">
       </el-table-column>
@@ -63,6 +77,8 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination layout="prev, pager, next" :total="pages" :current-page="currentPage" @current-change="handleCurrentChange">
+    </el-pagination>
   </div>
 </template>
 <style scoped>
@@ -77,22 +93,34 @@
 <script>
   export default {
     created() {
-      this.acquireDate();
+      this.acquireDate(1);
     },
     methods: {
-      acquireDate() {
-        this.axios({
-          url: 'api/admin/taeList',
-          method: 'get',
-          baseURL: '',
+      acquireDate(pageNum) {
+        this.axios.get('api/admin/taeList', {
+          params: {
+            pageNum: pageNum
+          }
         })
           .then(res => {
-            // let data = res.data;
+            for(let i = 0 ; i < res.data.data.list.length ;i++){
+              if(res.data.data.list[i].professional == 1){
+                res.data.data.list[i].professional = '助教';
+              }else if(res.data.data.list[i].professional == 2){
+                res.data.data.list[i].professional = '讲师';
+              }else{
+                res.data.data.list[i].professional = '教授';
+              }
+            }
+            this.tableDate = res.data.data.list;
+            this.pages = res.data.data.pages;
+            console,log(this.tableDate);
           })
           .catch(res => {
 
           })
         let data = [{
+          id: 1,
           teaNumber: '0313303',
           teaName: '王小虎',
           college: '通信与信息工程学院',
@@ -137,11 +165,17 @@
         }]
         this.tableDate = data;
       },
+      handleCurrentChange(val) {
+        this.acquireDate(val);
+      },
       handleEdit(index, row) {
         this.ruleForm.teaNumber = row[index].teaNumber;
         this.ruleForm.college = row[index].college;
         this.ruleForm.teaName = row[index].teaName;
         this.ruleForm.phone = row[index].phone;
+        this.ruleForm.email = row[index].email;
+        this.ruleForm.professional = row[index].professional;
+        this.ruleForm.id = row[index].id;
         this.dialogFormVisible = true;
       },
       addBtn() {
@@ -156,9 +190,6 @@
       submitForm(formName, index, row) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log('yes');
-            console.log(index);
-            let data = this.ruleForm;
             this.axios({
               url: '/addTea',
               method: 'post',
@@ -167,19 +198,13 @@
             })
               .then(res => {
                 console.log(res.data);
-                console.log(res.status);
-                console.log(res.statusText);
-                console.log(res.headers);
-                console.log(res.config);
                 this.$message({
                   message: '新增成功',
                   type: 'success'
                 });
                 this.dialogFormVisible = false;
                 //刷新表格
-                this.acquireDate();
-                // 带查询参数，变成 /register?plan=private
-                // router.push({ path: '/std/allCourse', query: { plan: 'private' }})
+                this.acquireDate(this.currentPage);
               })
               .catch(res => {
                 console.log(res.data);
@@ -201,7 +226,11 @@
       },
       selectRow(index, rows) {
         //向后台发送删除该教师信息
-        this.axios.get('/api/admin/delTea?ID=12345')
+        this.axios.get('/api/admin/delTea',{
+          params: {
+            id: rows[index].id
+          }
+        })
         .then(res => {
           console.log(response);
           this.$message({
@@ -226,9 +255,13 @@
           college: '',
           teaName: '',
           phone: '',
+          email: '',
+          professional: '',
         },
         tableDate: [],
-        dialogFormVisible: false
+        dialogFormVisible: false,
+        pages: 1,
+        currentPage: 1,
       }
     }
   }
