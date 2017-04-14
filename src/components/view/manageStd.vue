@@ -81,51 +81,51 @@
           .catch(res => {
 
           })
-        let data = [{
-          id: 1,
-          stuNumber: '0313303',
-          stuName: '王小虎',
-          college: '通信与信息工程学院',
-          classGrade: '2',
-          email: '153@456.com'
-        }, {
-          stuNumber: '0313302',
-          stuName: '王小虎',
-          college: '通信与信息工程学院',
-          classGrade: '2',
-          email: '153@456.com'
-        }, {
-          stuNumber: '0313304',
-          stuName: '王小虎',
-          college: '通信与信息工程学院',
-          classGrade: '2',
-          email: '153@456.com'
-        }, {
-          stuNumber: '0313301',
-          stuName: '王小虎',
-          college: '通信与信息工程学院',
-          classGrade: '2',
-          email: '153@456.com'
-        }, {
-          stuNumber: '0313308',
-          stuName: '王小虎',
-          college: '通信与信息工程学院',
-          classGrade: '2',
-          email: '153@456.com'
-        }, {
-          stuNumber: '0313306',
-          stuName: '王小虎',
-          college: '通信与信息工程学院',
-          classGrade: '2',
-          email: '153@456.com'
-        }, {
-          stuNumber: '0313307',
-          stuName: '王小虎',
-          college: '通信与信息工程学院',
-          classGrade: '2',
-          email: 'asda@111.com'
-        }]
-        this.tableDate = data;
+        // let data = [{
+        //   id: 1,
+        //   stuNumber: '0313303',
+        //   stuName: '王小虎',
+        //   college: '通信与信息工程学院',
+        //   classGrade: '2',
+        //   email: '153@456.com'
+        // }, {
+        //   stuNumber: '0313302',
+        //   stuName: '王小虎',
+        //   college: '通信与信息工程学院',
+        //   classGrade: '2',
+        //   email: '153@456.com'
+        // }, {
+        //   stuNumber: '0313304',
+        //   stuName: '王小虎',
+        //   college: '通信与信息工程学院',
+        //   classGrade: '2',
+        //   email: '153@456.com'
+        // }, {
+        //   stuNumber: '0313301',
+        //   stuName: '王小虎',
+        //   college: '通信与信息工程学院',
+        //   classGrade: '2',
+        //   email: '153@456.com'
+        // }, {
+        //   stuNumber: '0313308',
+        //   stuName: '王小虎',
+        //   college: '通信与信息工程学院',
+        //   classGrade: '2',
+        //   email: '153@456.com'
+        // }, {
+        //   stuNumber: '0313306',
+        //   stuName: '王小虎',
+        //   college: '通信与信息工程学院',
+        //   classGrade: '2',
+        //   email: '153@456.com'
+        // }, {
+        //   stuNumber: '0313307',
+        //   stuName: '王小虎',
+        //   college: '通信与信息工程学院',
+        //   classGrade: '2',
+        //   email: 'asda@111.com'
+        // }]
+        // this.tableDate = data;
       },
       handleCurrentChange(val) {
         this.acquireDate(val);

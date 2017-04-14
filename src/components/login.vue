@@ -41,34 +41,34 @@ export default {
       this.$refs[formName].validate((valid)=>{
         if(valid){
           console.log(this.ruleForm);
-          let data = this.ruleForm;
-          this.$router.push({ path: '/std/allCourse'})
-          // this.axios({
-          //   url: '/api/user/login',
-          //   method: 'post',
-          //   data: this.ruleForm
-          // })
-          // .then(res => {
-          //   console.log(res.data);
-          //   if(res.data.code == 0){
-          //     if(this.ruleForm.resource == 0){
-          //       this.$router.push({ path: '/std/allCourse'})
-          //     }else if(this.ruleForm.resource == 2){
-          //       this.$router.push({ path: '/admin/manageStd'})
-          //     }else{
-          //       this.$router.push({ path: '/teach/coursePlan'})
-          //     }
-          //   }else{
-          //     this.$message({
-          //         message: res.data.message,
-          //         type: 'error'
-          //       });
-          //   }
+          // let data = this.ruleForm;
+          // this.$router.push({ path: '/std/allCourse'})
+          this.axios({
+            url: '/api/user/login',
+            method: 'post',
+            data: this.ruleForm
+          })
+          .then(res => {
+            console.log(res.data);
+            if(res.data.code == 0){
+              if(this.ruleForm.resource == 0){
+                this.$router.push({ path: '/std/allCourse'})
+              }else if(this.ruleForm.resource == 2){
+                this.$router.push({ path: '/admin/manageStd'})
+              }else{
+                this.$router.push({ path: '/teach/coursePlan'})
+              }
+            }else{
+              this.$message({
+                  message: res.data.message,
+                  type: 'error'
+                });
+            }
             
-          // })
-          // .catch(res => {
-          //   console.log(res.data);
-          // })
+          })
+          .catch(res => {
+            console.log(res.data);
+          })
         }else{
           return false;
         }
