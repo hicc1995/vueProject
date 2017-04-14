@@ -154,7 +154,7 @@
     watch: {
       selectStatus: function(val, oldval){
         console.log(val);
-        this.acquireDate(this.pages, this.selectStatus);
+        this.acquireDate(this.currentPage, this.selectStatus);
       }
     },
     data() {

@@ -22,7 +22,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+          <el-button type="primary" v-loading.fullscreen.lock="Loading" @click="submitForm('ruleForm2')">提交</el-button>
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -98,6 +98,7 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            this.Loading = true;
             this.axios({
               url: '/login',
               baseURL: '/query/api',
@@ -114,6 +115,8 @@ export default {
                 });
               }else{
                 this.gridData = res.data.data;
+                //关闭loading
+                this.Loading = false;
                 this.dialogTableVisible = true;
               }
             })
