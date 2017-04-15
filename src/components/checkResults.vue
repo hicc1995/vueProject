@@ -78,6 +78,7 @@ export default {
           number: '',
           semester: ''
         },
+        Loading: false,
         rules2: {
           password: [
             { validator: validatePass, trigger: 'blur' }
@@ -106,7 +107,9 @@ export default {
               data: this.ruleForm2
             })
             .then(res => {
-              console.log(res.data);
+              if(res.data.code == 403){
+                this.$router.push({ path: '/'})
+              }
               if(res.data.data == ""){
                 this.$message({
                   showClose: true,

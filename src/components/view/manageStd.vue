@@ -43,7 +43,7 @@
     <el-button @click.native.prevent="handleDelete(scope.$index, tableDate)" type="text" size="small">
       删除该学生
     </el-button>
-    <el-button @click.native.prevent="handleEdit(scope.$index, tableDate)" type="text" size="small">编辑</el-button>
+    <!--<el-button @click.native.prevent="handleEdit(scope.$index, tableDate)" type="text" size="small">编辑</el-button>-->
   </template>
 </el-table-column>
 </el-table>
@@ -75,57 +75,12 @@
         })
           .then(res => {
             // let data = res.data;
+            if(res.data.code == 403){
+              this.$router.push({ path: '/'})
+            }
             this.tableDate = res.data.data.list;
             this.pages = res.data.data.pages;
           })
-          .catch(res => {
-
-          })
-        // let data = [{
-        //   id: 1,
-        //   stuNumber: '0313303',
-        //   stuName: '王小虎',
-        //   college: '通信与信息工程学院',
-        //   classGrade: '2',
-        //   email: '153@456.com'
-        // }, {
-        //   stuNumber: '0313302',
-        //   stuName: '王小虎',
-        //   college: '通信与信息工程学院',
-        //   classGrade: '2',
-        //   email: '153@456.com'
-        // }, {
-        //   stuNumber: '0313304',
-        //   stuName: '王小虎',
-        //   college: '通信与信息工程学院',
-        //   classGrade: '2',
-        //   email: '153@456.com'
-        // }, {
-        //   stuNumber: '0313301',
-        //   stuName: '王小虎',
-        //   college: '通信与信息工程学院',
-        //   classGrade: '2',
-        //   email: '153@456.com'
-        // }, {
-        //   stuNumber: '0313308',
-        //   stuName: '王小虎',
-        //   college: '通信与信息工程学院',
-        //   classGrade: '2',
-        //   email: '153@456.com'
-        // }, {
-        //   stuNumber: '0313306',
-        //   stuName: '王小虎',
-        //   college: '通信与信息工程学院',
-        //   classGrade: '2',
-        //   email: '153@456.com'
-        // }, {
-        //   stuNumber: '0313307',
-        //   stuName: '王小虎',
-        //   college: '通信与信息工程学院',
-        //   classGrade: '2',
-        //   email: 'asda@111.com'
-        // }]
-        // this.tableDate = data;
       },
       handleCurrentChange(val) {
         this.acquireDate(val);
@@ -155,7 +110,10 @@
           }
         })
           .then(res => {
-            // let data = res.d ata; 
+            // let data = res.d ata;
+            if(res.data.code == 403){
+              this.$router.push({ path: '/'})
+            }
             this.$message ({
                   message: '删除学生成功',
                   type: 'success' 
@@ -182,6 +140,9 @@
 
               .then(res => {
                 console.log(res.data);
+                if(res.data.code == 403){
+                  this.$router.push({ path: '/'})
+                }
                 this.$message({
                   message: '新增成功',
                   type: 'success'

@@ -71,7 +71,9 @@
           }
         })
           .then(res => {
-            // let data = res.data;
+            if(res.data.code == 403){
+              this.$router.push({ path: '/'})
+            }
             for(let i = 0 ; i < res.data.data.list.length ;i++){
               if(res.data.data.list[i].status == 0){
                 res.data.data.list[i].status = '待审核';
@@ -86,17 +88,14 @@
               res.data.data.list[i].endTime = t.getFullYear()+'-'+t.getMonth()+'-'+t.getDate();
             }
             this.tableDate = res.data.data.list;
-            this.pages = res.data.data.pages;
-            console,log(this.tableDate)
+            this.pages = res.data.data.pages
           })
           .catch(res => {
 
           })
       },
       handleCurrentChange(val) {
-        // this.currentPage = val;
-        console.log(this.selectStatus)
-        this.acquireDate(val, this.selectStatus);
+        this.acquireDate(val, this.selectStatus)
       },
       passRow(index, rows) {
         console.log(rows[index].id);
@@ -105,17 +104,16 @@
             id: rows[index].id,
             status: '1'
           })
-            .then(function (response) {
+            .then(res => {
               this.$message({
                 showClose: true,
-                message: '操作成功',
+                message: res.data.message,
                 type: 'success'
               });
               rows[index].tag = '通过';
+              this.acquireDate(this.currentPage, this.selectStatus);
             })
-            .catch(function (response) {
-              console.log(response);
-            });
+            .catch(res => {});
         } else {
           this.$message({
             showClose: true,
@@ -131,16 +129,17 @@
             id: rows[index].id,
             status: '2'
           })
-            .then(function (response) {
+            .then(res => {
               rows[index].tag = '不通过';
               this.$message({
                 showClose: true,
                 message: '操作成功',
                 type: 'success'
               });
+              this.acquireDate(this.currentPage, this.selectStatus);
             })
-            .catch(function (response) {
-              console.log(response);
+            .catch(res => {
+              // console.log(response);
             });
         } else {
           this.$message({

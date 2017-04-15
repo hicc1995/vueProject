@@ -15,7 +15,7 @@
             <el-form-item label="教师学院" prop="college" :rules="{ required: true, message: '学院不能为空', trigger: 'blur'}">
               <el-input v-model.trim="ruleForm.college" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="职称" prop="professional" :rules="{ required: true, message: '职称不能为空', trigger: 'blur'}">
+            <el-form-item label="职称" prop="professional">
               <!--<el-input v-model.trim="ruleForm.professional"></el-input>-->
               <el-select v-model="ruleForm.professional" auto-complete="off" placeholder="请选择">
                 <el-option label="助教" :value="1"></el-option>
@@ -23,11 +23,11 @@
                 <el-option label="教授" :value="3"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="电话" prop="phone" :rules="{ required: true, message: '电话不能为空', trigger: 'blur'}">
-              <el-input v-model.trim="ruleForm.phone"></el-input>
+            <el-form-item label="电话" prop="phone" :rules="[{ required: true, message: '电话不能为空', trigger: 'blur'},{ type: 'number', message: '电话必须为数字值', trigger: 'blur'}]">
+              <el-input v-model.trim="ruleForm.phone" auto-complete="off" type="phone"></el-input>
             </el-form-item>
-            <el-form-item label="邮箱" prop="email" :rules="{ required: true, message: '邮箱不能为空', trigger: 'blur'}">
-              <el-input v-model.trim="ruleForm.email"></el-input>
+            <el-form-item label="邮箱" prop="email" :rules="[{ required: true, message: '邮箱不能为空', trigger: 'blur'},{ type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }]">
+              <el-input v-model.trim="ruleForm.email" type="email"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -73,7 +73,7 @@
             </el-form-item>
           </el-form>
         </el-popover>-->
-        <el-button @click.native.prevent="handleEdit(scope.$index, tableDate)" type="text" size="small">编辑</el-button>
+        <!--<el-button @click.native.prevent="handleEdit(scope.$index, tableDate)" type="text" size="small">编辑</el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -103,6 +103,9 @@
           }
         })
           .then(res => {
+            if(res.data.code == 403){
+              this.$router.push({ path: '/'})
+            }
             for(let i = 0 ; i < res.data.data.list.length ;i++){
               if(res.data.data.list[i].professional == 1){
                 res.data.data.list[i].professional = '助教';
@@ -119,51 +122,6 @@
           .catch(res => {
 
           })
-        let data = [{
-          id: 1,
-          teaNumber: '0313303',
-          teaName: '王小虎',
-          college: '通信与信息工程学院',
-          phone: '15332426197',
-          email: '153@456.com'
-        }, {
-          teaNumber: '0313302',
-          teaName: '王小虎',
-          college: '通信与信息工程学院',
-          phone: '15332426197',
-          email: '153@456.com'
-        }, {
-          teaNumber: '0313304',
-          teaName: '王小虎',
-          college: '通信与信息工程学院',
-          phone: '15332426197',
-          email: '153@456.com'
-        }, {
-          teaNumber: '0313301',
-          teaName: '王小虎',
-          college: '通信与信息工程学院',
-          phone: '15332426197',
-          email: '153@456.com'
-        }, {
-          teaNumber: '0313308',
-          teaName: '王小虎',
-          college: '通信与信息工程学院',
-          phone: '15332426197',
-          email: '153@456.com'
-        }, {
-          teaNumber: '0313306',
-          teaName: '王小虎',
-          college: '通信与信息工程学院',
-          phone: '15332426197',
-          email: '153@456.com'
-        }, {
-          teaNumber: '0313307',
-          teaName: '王小虎',
-          college: '通信与信息工程学院',
-          phone: '15332426197',
-          email: 'asda@111.com'
-        }]
-        this.tableDate = data;
       },
       handleCurrentChange(val) {
         this.acquireDate(val);
@@ -197,7 +155,9 @@
               data: this.ruleForm
             })
               .then(res => {
-                console.log(res.data);
+                if(res.data.code == 403){
+                  this.$router.push({ path: '/'})
+                }
                 this.$message({
                   message: '新增成功',
                   type: 'success'
@@ -232,7 +192,9 @@
           }
         })
         .then(res => {
-          console.log(response);
+          if(res.data.code == 403){
+              this.$router.push({ path: '/'})
+            }
           this.$message({
                   message: '删除教师成功',
                   type: 'success'
@@ -244,7 +206,7 @@
                   message: '删除教师失败',
                   type: 'error'
                 });
-          console.log(response);
+          console.log(res);
         });
       }
     },

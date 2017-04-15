@@ -1,5 +1,13 @@
 <template>
 	<div id="std">
+		<nav>
+			<el-col :span="4" :offset="2">
+				<div>什么什么系统</div>
+			</el-col>
+			<el-col :span="4" :offset="12">
+				<el-button class="out" type="info" @click="out">退出账号</el-button>
+			</el-col>
+		</nav>
 		<el-row class="tac">
 			<el-col :span="4" :offset="2">
 			  <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" router>
@@ -22,11 +30,26 @@
 	.el-menu-vertical-demo{
 		height: 100%;
 	}
+	.out{
+		margin-top: 12px;
+	}
 </style>
 <script>
 	export default {
 		name:'std',
 	  methods: {
+			out() {
+				this.axios.post('/api/user/logout', {})
+            .then(res => {
+              this.$message({
+                showClose: true,
+                message: '退出成功',
+                type: 'success'
+              });
+              this.$router.push({ path: '/'})
+            })
+            .catch(res => {});
+			},
 	    handleOpen(key, keyPath) {
 	      console.log(key, keyPath);
 	    },

@@ -36,29 +36,28 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log('yes');
-            console.log(this.ruleForm);
             this.axios({
                 url: '/api/message/creatMessage',
                 method: 'post',
                 data: this.ruleForm
               })
               .then(res => {
-                console.log(res.data);
-                console.log(res.status);
+                if(res.data.code == 403){
+                  this.$router.push({ path: '/'})
+                }
                 this.$message({
                   type: 'success',
-                  message: '发布成功'
-                });
-              })
-              .catch(res => {
-                console.log(res.data);
+                  message: res.data.message
+                })
+                this.ruleForm.title = '';
+                this.ruleForm.type = '';
+                this.ruleForm.content = '';
               })
           } else {
             console.log('error');
             return false;
           }
-        })
+        });
       },
       resetForm(fromName) {
         this.$refs[fromName].resetFields();

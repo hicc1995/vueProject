@@ -4,52 +4,65 @@
       <p>已选课程</p>
     </div>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="date" label="日期" width="180">
-      </el-table-column>
-      <el-table-column prop="className" label="课程名" width="180">
-      </el-table-column>
-      <el-table-column prop="address" label="地址">
-      </el-table-column>
-      <el-table-column prop="teacher" label="教师">
-      </el-table-column>
-    </el-table>
+<el-table-column prop="date" label="上课时间">
+</el-table-column>
+<el-table-column prop="couName" label="课程名称">
+</el-table-column>
+<el-table-column prop="startTime" label="开始时间">
+</el-table-column>
+<el-table-column prop="endTime" label="结束时间">
+</el-table-column>
+<el-table-column prop="taeName" label="教师名称">
+</el-table-column>
+<el-table-column prop="college" label="学院">
+</el-table-column>
+</el-table>
+<el-pagination layout="prev, pager, next" :total="pages" :current-page="currentPage" @current-change="handleCurrentChange">
+</el-pagination>
 </div>
 </template>
 
 <script>
   export default {
     created() {
-      this.acquireData();
+      this.acquireData(1);
     },
     methods: {
-      acquireData() {
-        let data = [{
-          date: '2016-05-02',
-          className: '地理',
-          address: '上海市普陀区金沙江路 1518 弄',
-          teacher: 'cc'
-        }, {
-          date: '2016-05-04',
-          className: '数学',
-          address: '上海市普陀区金沙江路 1517 弄',
-          teacher: 'cc'
-        }, {
-          date: '2016-05-01',
-          className: '英语',
-          address: '上海市普陀区金沙江路 1519 弄',
-          teacher: 'cc'
-        }, {
-          date: '2016-05-03',
-          className: '体育',
-          address: '上海市普陀区金沙江路 1516 弄',
-          teacher: 'cc'
-        }];
-        this.tableData = data;
-      }
+      acquireData(pageNum) {
+        this.axios.get('/api/stu/myCouList', {
+          params: {
+            pageNum: pageNum, //第几页
+            pageSize: 10,  //每页数据(默认10条)
+          }
+        })
+          .then(res => {
+            if (res.data.code == 403) {
+              this.$router.push({ path: '/' })
+            }
+            for(let i = 0 ; i < res.data.data.list.length ; i++){
+              let d = new Date(res.data.data.list[i].startTime);
+              res.data.data.list[i].startTime = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+              let t = new Date(res.data.data.list[i].endTime);
+              res.data.data.list[i].endTime = t.getFullYear() + '-' + t.getMonth() + '-' + t.getDate();
+            }
+            this.tableData = res.data.data.list;
+            this.pages = res.data.data.pages;
+          })
+          .catch(res => {
+
+          });
+      },
+      handleCurrentChange(val) {
+        this.acquireDate(val);
+      },
+
     },
     data() {
       return {
-        tableData: []
+        tableData: [],
+        currentPage: 1,
+        pages: 1,
+        selectStatus: 0,
       }
     }
   }
