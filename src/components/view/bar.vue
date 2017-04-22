@@ -51,11 +51,11 @@ module.exports = {
   },
 	data() {
 		return {
-			banners: [ '../static/img/01.jpg',
-				'../static/img/02.jpg',
-				'../static/img/03.jpg',
-				'../static/img/04.jpg',
-				'../static/img/05.jpg',
+			banners: [ 'https://xcard-dev.oss-cn-shanghai.aliyuncs.com/avatar/gvOFhL0oWSZzPvS1upbtLhqzsx3tRCvw_01.jpg',
+				'https://xcard-dev.oss-cn-shanghai.aliyuncs.com/avatar/L7nrlbXvh9fdBjUYHTcMtDRsyAooXu2T_02.jpg',
+				'https://xcard-dev.oss-cn-shanghai.aliyuncs.com/avatar/toDE0z4TbcBYbzIyUFbA3m8K6zbmtAHb_03.jpg',
+				'https://xcard-dev.oss-cn-shanghai.aliyuncs.com/avatar/AzuPLQFZ3bqcQumi4DbO82s56kjGZWsr_04.jpg',
+				'https://xcard-dev.oss-cn-shanghai.aliyuncs.com/avatar/yEfxcW13ufszZ44nFgFTtNfrr0L4FCEt_05.jpg',
 			]
 		}
 	}
