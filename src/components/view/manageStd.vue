@@ -15,8 +15,8 @@
             <el-form-item label="学生学院" prop="college" :rules="{ required: true, message: '学院不能为空', trigger: 'blur'}">
               <el-input v-model.trim="ruleForm.college" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="班级" prop="classGrade" :rules="{ required: true, message: '班级不能为空', trigger: 'blur'}">
-              <el-input v-model.trim="ruleForm.classGrade"></el-input>
+            <el-form-item label="班级" prop="grade" :rules="{ required: true, message: '班级不能为空', trigger: 'blur'}">
+              <el-input v-model.trim="ruleForm.grade"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -34,7 +34,7 @@
 </el-table-column>
 <el-table-column prop="college" label="学生学院">
 </el-table-column>
-<el-table-column prop="classGrade" label="学生班级">
+<el-table-column prop="grade" label="学生班级">
 </el-table-column>
 <el-table-column prop=" " label="学生邮箱">
 </el-table-column>
@@ -90,7 +90,7 @@
           stuNumber: '',
           college: '',
           stuName: '',
-          classGrade: '',
+          grade: '',
         };
         this.dialogFormVisible = true;
       },
@@ -175,7 +175,7 @@
           stuNumber: '',
           college: '',
           stuName: '',
-          classGrade: '',
+          grade: '',
         },
         tableDate: [],
         dialogFormVisible: false,

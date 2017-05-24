@@ -23,7 +23,7 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8090,
+    port: 8091,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -33,7 +33,7 @@ module.exports = {
             changeOrigin: true
         },
         '/api': {
-          target: 'http://127.0.0.1:9999',
+          target: 'http://127.0.0.1:8090',
           changeOrigin: true
         },
         // '/api': {

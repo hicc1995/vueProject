@@ -60,7 +60,7 @@ module.exports = {
           for(i in res.data.data){
             for(let j = 0 ; j < res.data.data[i].length ; j++){
               let t = new Date(res.data.data[i][j].createTime);
-              res.data.data[i][j].createTime = t.getFullYear()+'-'+t.getMonth()+'-'+t.getDate();
+              res.data.data[i][j].createTime = t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate();
             }
           }
           this.inform = res.data.data.inform;

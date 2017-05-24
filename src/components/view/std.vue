@@ -1,10 +1,10 @@
 <template>
 	<div id="std">
 		<nav>
-			<el-col :span="4" :offset="2">
-				<div>什么什么系统</div>
+			<el-col :span="12" :offset="2">
+				<p class="navtitle">学生多功能管理系统（学生）</p>
 			</el-col>
-			<el-col :span="4" :offset="12">
+			<el-col :span="4">
 				<el-button class="out" type="info" @click="out">退出账号</el-button>
 			</el-col>
 		</nav>
@@ -32,6 +32,12 @@
 	}
 	.out{
 		margin-top: 12px;
+	}
+	.navtitle{
+		font-size: 30px;
+		margin: 0;
+		padding: 0;
+		line-height: 60px;
 	}
 </style>
 <script>

@@ -107,10 +107,8 @@ export default {
               data: this.ruleForm2
             })
             .then(res => {
-              if(res.data.code == 403){
-                this.$router.push({ path: '/'})
-              }
-              if(res.data.data == ""){
+              this.Loading = false;
+              if(res.data.code != 1){
                 this.$message({
                   showClose: true,
                   message: res.data.message,
@@ -119,7 +117,6 @@ export default {
               }else{
                 this.gridData = res.data.data;
                 //关闭loading
-                this.Loading = false;
                 this.dialogTableVisible = true;
               }
             })

@@ -23,7 +23,7 @@
                 <el-option label="教授" :value="3"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="电话" prop="phone" :rules="[{ required: true, message: '电话不能为空', trigger: 'blur'},{ type: 'number', message: '电话必须为数字值', trigger: 'blur'}]">
+            <el-form-item label="电话" prop="phone" :rules="[{ required: true, message: '电话不能为空', trigger: 'blur'},{ validator: 'regexp', pattern: /^\d{11}$/, message: '手机号码必须是11位数字', trigger: 'change,blur'}]">
               <el-input v-model.trim="ruleForm.phone" auto-complete="off" type="phone"></el-input>
             </el-form-item>
             <el-form-item label="邮箱" prop="email" :rules="[{ required: true, message: '邮箱不能为空', trigger: 'blur'},{ type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }]">
