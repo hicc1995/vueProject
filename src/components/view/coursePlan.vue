@@ -82,40 +82,41 @@
                 res.data.data[i].status = '不通过';
               }
               let d = new Date(res.data.data[i].startTime);
-              res.data.data[i].startTime = d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+              res.data.data[i].startTime = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
               let t = new Date(res.data.data[i].endTime);
-              res.data.data[i].endTime = t.getFullYear()+'-'+t.getMonth()+'-'+t.getDate();
+              res.data.data[i].endTime = t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate();
             }
-            console.log(res.data.data);
             this.tableData = res.data.data;
           })
           .catch(res => {
-            console.log(res);
           })
       },
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
+      submitForm(fromName) {
+        var _this = this;
+        this.$refs[fromName].validate((valid) => {
           if (valid) {
-            console.log(this.ruleForm);
             this.axios({
               url: '/api/tea/addCou',
               method: 'post',
               data: this.ruleForm
             })
               .then(res => {
-               this.$message({
-                showClose: true,
-                message: res.data.message,
-                type: 'success'
-              });
-                this.$refs[fromName].resetFields();
+                 this.$message({
+                  showClose: true,
+                  message: '提交课程计划成功',
+                  type: 'success'
+                });
                 this.acquireData();
+                this.$refs[fromName].resetFields();
               })
               .catch(res => {
-                console.log(res.data);
+                this.acquireData();
+                this.$refs[fromName].resetFields();
               })
           } else {
             console.log('error');
+                this.acquireData();
+                this.$refs[fromName].resetFields();
             return false;
           }
         })

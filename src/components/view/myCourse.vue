@@ -41,9 +41,9 @@
             }
             for(let i = 0 ; i < res.data.data.list.length ; i++){
               let d = new Date(res.data.data.list[i].startTime);
-              res.data.data.list[i].startTime = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+              res.data.data.list[i].startTime = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
               let t = new Date(res.data.data.list[i].endTime);
-              res.data.data.list[i].endTime = t.getFullYear() + '-' + t.getMonth() + '-' + t.getDate();
+              res.data.data.list[i].endTime = t.getFullYear() + '-' + (t.getMonth()+1) + '-' + t.getDate();
             }
             this.tableData = res.data.data.list;
             this.pages = res.data.data.pages;
