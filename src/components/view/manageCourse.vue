@@ -35,7 +35,7 @@
         </template>
       </el-table-column>
     </el-table>
-<el-pagination layout="prev, pager, next" :total="pages" :current-page="currentPage" @current-change="handleCurrentChange">
+<el-pagination layout="prev, pager, next" :total="totals" :current-page="currentPage" @current-change="handleCurrentChange">
 </el-pagination>
 </div>
 </template>
@@ -88,13 +88,14 @@
               res.data.data.list[i].endTime = t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate();
             }
             this.tableDate = res.data.data.list;
-            this.pages = res.data.data.pages
+            this.totals = res.data.data.total;
           })
           .catch(res => {
 
           })
       },
       handleCurrentChange(val) {
+        console.log('hi');
         this.acquireDate(val, this.selectStatus)
       },
       passRow(index, rows) {
@@ -160,7 +161,7 @@
       return {
         tableDate: [],
         currentPage: 1,
-        pages: 1,
+        totals: 0,
         selectStatus: 0,
       }
     }

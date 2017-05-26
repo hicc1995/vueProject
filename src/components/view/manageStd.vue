@@ -47,7 +47,7 @@
   </template>
 </el-table-column>
 </el-table>
-<el-pagination layout="prev, pager, next" :total="pages" :current-page="currentPage" @current-change="handleCurrentChange">
+<el-pagination layout="prev, pager, next" :total="totals" :current-page="currentPage" @current-change="handleCurrentChange">
 </el-pagination>
 </div>
 </template>
@@ -79,7 +79,7 @@
               this.$router.push({ path: '/'})
             }
             this.tableDate = res.data.data.list;
-            this.pages = res.data.data.pages;
+            this.totals = res.data.data.total;
           })
       },
       handleCurrentChange(val) {
@@ -179,7 +179,7 @@
         },
         tableDate: [],
         dialogFormVisible: false,
-        pages: 1,
+        total: 1,
         currentPage: 1,
       }
     }
